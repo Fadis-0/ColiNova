@@ -1,0 +1,7 @@
+{
+  "name": "CocoColis - P2P Delivery",
+  "description": "The eco-friendly and economical way to send parcels.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

@@ -1,0 +1,372 @@
+
+import React, { useState, useEffect } from 'react';
+import { useApp } from '../../context/AppContext';
+import { useLanguage } from '../../context/LanguageContext';
+import RealMap from '../../components/ui/RealMap';
+import { uploadParcelImage } from '../../services/data';
+import { Coordinates } from '../../types';
+import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/types';
+import { Button } from '../../components/ui/Button';
+import { ArrowLeft, ArrowRight, X, Loader2, Camera, Check } from 'lucide-react';
+
+export const CreateParcel = () => {
+  const { addParcel } = useApp();
+  const { t, dir } = useLanguage();
+  const [step, setStep] = useState(1);
+  const [isUploading, setIsUploading] = useState(false);
+  const [route, setRoute] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    weight_kg: '',
+    receiverName: '',
+    origin: { lat: null, lng: null, label: null } as Coordinates,
+    destination: { lat: null, lng: null, label: null } as Coordinates,
+    price: '',
+    images: [] as string[]
+  });
+
+  const ArrowNext = dir === 'rtl' ? ArrowLeft : ArrowRight;
+  const ArrowBack = dir === 'rtl' ? ArrowRight : ArrowLeft;
+
+  useEffect(() => {
+    const fetchRoute = async () => {
+      const origin = `${formData.origin.lng},${formData.origin.lat}`;
+      const destination = `${formData.destination.lng},${formData.destination.lat}`;
+      const url = `https://router.project-osrm.org/route/v1/driving/${origin};${destination}?overview=full&geometries=geojson`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.routes && data.routes.length > 0) {
+          setRoute(data.routes[0].geometry);
+        }
+      } catch (error) {
+        console.error("Failed to fetch route:", error);
+      }
+    };
+
+    if (formData.origin.lat && formData.origin.lng && formData.destination.lat && formData.destination.lng) {
+      fetchRoute();
+    } else {
+      setRoute(null); // Clear route if coordinates are not set
+    }
+  }, [formData.origin, formData.destination]);
+
+
+  const handleNext = () => setStep(s => s + 1);
+  const handleBack = () => setStep(s => s - 1);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setIsUploading(true);
+      try {
+        const files = Array.from(e.target.files);
+        const newImageUrls = await Promise.all(
+          files.map(file => uploadParcelImage(file))
+        );
+        setFormData(prev => ({ ...prev, images: [...prev.images, ...newImageUrls] }));
+      } catch (error) {
+        console.error("Failed to upload images", error);
+        // You might want to show an error message to the user here
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
+  const removeImage = (index: number) => {
+    // Note: This doesn't delete the image from Supabase Storage. 
+    // A more robust implementation would require a backend function to do so.
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const [locationSelectionMode, setLocationSelectionMode] = useState<'origin' | 'destination' | null>(null);
+
+  const handleModeToggle = (mode: 'origin' | 'destination') => {
+    setLocationSelectionMode(prev => prev === mode ? null : mode);
+  };
+
+  const handleLocationSelect = async (coords: { lat: number; lng: number }) => {
+    // Optimistically update the pin location
+    setFormData(prev => ({
+      ...prev,
+      [locationSelectionMode!]: { ...coords, label: 'Loading...' }
+    }));
+
+    const apiKey = import.meta.env.VITE_MAPTILER_KEY;
+    const url = `https://api.maptiler.com/geocoding/${coords.lng},${coords.lat}.json?key=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const placeName = data.features[0].place_name;
+        setFormData(prev => ({
+          ...prev,
+          [locationSelectionMode!]: { ...coords, label: placeName }
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch reverse geocoding:", error);
+      // Revert label if fetch fails
+      setFormData(prev => ({
+        ...prev,
+        [locationSelectionMode!]: { ...coords, label: 'Unknown Location' }
+      }));
+    }
+  };
+
+  const handleGeocodeResult = (e: MapboxglGeocodingEvent) => {
+    const { result } = e;
+    const location = {
+      lat: result.center[1],
+      lng: result.center[0],
+      label: result.text,
+    };
+    setFormData(prev => ({
+      ...prev,
+      [locationSelectionMode]: location
+    }));
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    // --- Form Validation ---
+    if (!formData.title || !formData.weight_kg || !formData.receiverName || !formData.price) {
+      alert('Please fill all the details in Step 1.');
+      return;
+    }
+    if (!formData.origin.lat || !formData.destination.lat) {
+      alert('Please set an origin and a destination on the map in Step 2.');
+      return;
+    }
+    // --- End Validation ---
+
+    setIsSubmitting(true);
+    try {
+      await addParcel({
+        title: formData.title,
+        description: formData.description,
+        weight_kg: Number(formData.weight_kg),
+        receiver_name: formData.receiverName,
+        price: Number(formData.price),
+        origin: { ...formData.origin, label: formData.origin.label || 'Custom Origin' },
+        destination: { ...formData.destination, label: formData.destination.label || 'Custom Dest' },
+        images: formData.images,
+        // Hardcoding size for now as it's missing from the form
+        size: 'M', 
+      });
+      window.location.hash = '#dashboard';
+    } catch (error: any) {
+      alert('Error creating parcel: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-12" dir={dir}>
+      <div className="mb-8">
+         <div className="flex items-center justify-between text-sm font-medium text-gray-500 mb-2">
+           
+           <span>{t('stepDetails')}</span>
+           <span>{t('stepRoute')}</span>
+           <span>{t('stepReview')}</span>
+         </div>
+         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+           <div className="h-full bg-primary transition-all duration-300" style={{ width: `${(step / 3) * 100}%` }}></div>
+         </div>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        {step === 1 && (
+          <div className="p-8 space-y-6">
+            <h2 className="text-2xl font-bold text-gray-900">{t('whatSending')}</h2>
+            
+            {/* Photo Upload Section */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">{t('parcelPhotos')}</label>
+              <div className="flex flex-wrap gap-4">
+                {formData.images.map((img, index) => (
+                  <div key={index} className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200 shadow-sm group">
+                    <img src={img} alt="Parcel preview" className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => removeImage(index)}
+                      className="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:bg-red-500 transition-all"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+                <label className={`w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all ${isUploading ? 'cursor-not-allowed bg-gray-100' : 'cursor-pointer hover:border-primary hover:bg-primary/5 text-gray-400 hover:text-primary'}`}>
+                  {isUploading ? (
+                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  ) : (
+                    <>
+                      <Camera className="w-6 h-6 mb-1" />
+                      <span className="text-[10px] font-bold uppercase">{t('addPhoto')}</span>
+                    </>
+                  )}
+                  <input type="file" accept="image/*" multiple className="hidden" onChange={handleImageUpload} disabled={isUploading} />
+                </label>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('itemTitle')}</label>
+                <input 
+                  value={formData.title}
+                  onChange={e => setFormData({...formData, title: e.target.value})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                  placeholder="e.g. Box of clothes"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('receiverName')}</label>
+                <input 
+                  value={formData.receiverName}
+                  onChange={e => setFormData({...formData, receiverName: e.target.value})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                  placeholder="e.g. Jane Doe"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('description')}</label>
+              <textarea 
+                value={formData.description}
+                onChange={e => setFormData({...formData, description: e.target.value})}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('weight')} (kg)</label>
+                <input 
+                  type="number"
+                  value={formData.weight_kg}
+                  onChange={e => setFormData({...formData, weight_kg: e.target.value})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('proposedPrice')}</label>
+                <input 
+                  type="number"
+                  value={formData.price}
+                  onChange={e => setFormData({...formData, price: e.target.value})}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="p-8 space-y-6">
+             <h2 className="text-2xl font-bold text-gray-900">{t('whereGoing')}</h2>
+             <p className="text-gray-600">{t('searchOrigin')}</p>
+             <div className="flex justify-center gap-4 my-2">
+                <Button variant={locationSelectionMode === 'origin' ? 'primary' : 'outline'} onClick={() => handleModeToggle('origin')}>{t('setOrigin')}</Button>
+                <Button variant={locationSelectionMode === 'destination' ? 'primary' : 'outline'} onClick={() => handleModeToggle('destination')}>{t('setDestination')}</Button>
+             </div>
+             <div className="h-96 bg-gray-100 rounded-lg relative">
+               <RealMap
+                 initialViewState={{
+                   latitude: 49.5,
+                   longitude: 8,
+                   zoom: 4
+                 }}
+                 markers={[
+                   { ...formData.origin, color: 'blue' },
+                   { ...formData.destination, color: 'red' }
+                 ]}
+                 onLocationSelect={handleLocationSelect}
+                 onGeocodeResult={handleGeocodeResult}
+                 route={route}
+                 locationSelectionMode={locationSelectionMode}
+               />
+               {locationSelectionMode && (
+                <p className="text-xs text-gray-500 mt-2 text-center">Now setting {locationSelectionMode} location</p>
+               )}
+             </div>
+             <div className="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('origin')}</label>
+                  <input 
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 cursor-default" 
+                    value={formData.origin.label || t('notSet')}
+                    placeholder={t('origin')}
+                    readOnly
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('destination')}</label>
+                  <input 
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 cursor-default" 
+                    value={formData.destination.label || t('notSet')}
+                    placeholder={t('destination')}
+                    readOnly
+                  />
+                </div>
+              </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="p-8 space-y-6">
+            <h2 className="text-2xl font-bold text-gray-900">{t('reviewRequest')}</h2>
+            <div className="bg-gray-50 p-6 rounded-xl space-y-4">
+              
+              {/* Image Preview in Review */}
+              {formData.images.length > 0 && (
+                <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                  {formData.images.map((img, i) => (
+                    <img key={i} src={img} alt="Parcel" className="w-16 h-16 rounded-lg object-cover border border-gray-200" />
+                  ))}
+                </div>
+              )}
+
+              <div className="flex justify-between border-b border-gray-200 pb-2">
+                <span className="text-gray-500">{t('item')}</span>
+                <span className="font-medium">{formData.title}</span>
+              </div>
+               <div className="flex justify-between border-b border-gray-200 pb-2">
+                <span className="text-gray-500">{t('route')}</span>
+                <span className="font-medium">{formData.origin.label || 'A'} → {formData.destination.label || 'B'}</span>
+              </div>
+               <div className="flex justify-between border-b border-gray-200 pb-2">
+                <span className="text-gray-500">{t('price')}</span>
+                <span className="font-medium text-green-600">DZD{formData.price}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Footer Actions */}
+        <div className="bg-gray-50 px-8 py-4 flex justify-between items-center border-t border-gray-200">
+           {step > 1 ? (
+             <Button variant="ghost" onClick={handleBack}><ArrowBack className={`w-4 h-4 ${dir === 'rtl' ? 'ml-2' : 'mr-2'}`}/> {t('back')}</Button>
+           ) : <div />}
+           
+           {step < 3 ? (
+             <Button onClick={handleNext}>{t('next')} <ArrowNext className={`w-4 h-4 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`}/></Button>
+           ) : (
+             <Button onClick={handleSubmit} loading={isSubmitting} className="bg-green-600 hover:bg-green-700">{t('postRequest')} <Check className={`w-4 h-4 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`}/></Button>
+           )}
+        </div>
+      </div>
+    </div>
+  );
+};
