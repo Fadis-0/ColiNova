@@ -35,15 +35,15 @@ export const translations = {
     publishTrip: 'أضف رحلتك',
     iamTraveler: 'أنا مسافر',
     economical: 'اقتصادي',
-    economicalDesc: 'وفر حتى 80٪ على شحناتك.',
+    economicalDesc: 'أرسل طرودك بتكلفة أقل.',
     profitable: 'مربح',
-    profitableDesc: 'حول رحلاتك إلى مصدر دخل.',
+    profitableDesc: 'اكسب المال عن طريق نقل الطرود.',
     reliable: 'موثوق',
     reliableDesc: 'طرودك مؤمنة ويمكن تتبعها.',
     sustainable: 'مستدام',
     sustainableDesc: 'قلل من بصمتك الكربونية باستخدام الرحلات الحالية.',
     joinCommunity: 'انضم إلى مجتمعنا',
-    joinCommunityDesc: 'سجل الآن وابدأ في الشحن أو الكسب.',
+    joinCommunityDesc: 'سجل الآن وابدأ في الشحن أو الكسب أو التتبع.',
     
     // Categories
     furniture: 'أثاث',
@@ -73,7 +73,10 @@ export const translations = {
     madeWithLove: 'صنع بحب للمجتمع',
     
     // Auth
-    welcomeBack: 'مرحباً بعودتك',
+    welcomeLoginTitle: 'مرحباً بعودتك',
+    welcomeLoginSubtitle: 'سعداء برؤيتك مرة أخرى!',
+    welcomeSignupTitle: 'انضم إلى مجتمعنا',
+    welcomeSignupSubtitle: 'سجل الآن للبدء في الشحن أو الكسب أو التتبع.',
     chooseRole: 'اختر دورك للمتابعة',
     email: 'البريد الإلكتروني',
     password: 'كلمة المرور',
@@ -215,7 +218,7 @@ export const translations = {
       },
       
       en: {
-        appName: 'CocoColis',
+        appName: 'ColiNova',
         login: 'Log in',
         signup: 'Sign Up',
         logout: 'Log Out',
@@ -247,15 +250,15 @@ export const translations = {
         publishTrip: 'Publish a trip',
         iamTraveler: 'I am a traveler',
         economical: 'Economical',
-        economicalDesc: 'Save up to 80% on your shipments.',
+        economicalDesc: 'Send your parcels at a lower cost.',
         profitable: 'Profitable',
-        profitableDesc: 'Turn your travels into a source of income.',
+        profitableDesc: 'Earn money by transporting parcels.',
         reliable: 'Reliable',
         reliableDesc: 'Your parcels are insured and tracked.',
         sustainable: 'Sustainable',
         sustainableDesc: 'Reduce your carbon footprint by using existing trips.',
         joinCommunity: 'Join our community',
-        joinCommunityDesc: 'Sign up now and start shipping or earning.',
+        joinCommunityDesc: 'Sign up now and start shipping, earning, or tracking.',
     
         // Categories
         furniture: 'Furniture',
@@ -285,7 +288,10 @@ export const translations = {
         madeWithLove: 'Made with love for the community',
         
         // Auth
-        welcomeBack: 'Welcome Back',
+        welcomeLoginTitle: 'Welcome Back',
+        welcomeLoginSubtitle: 'We\'re happy to see you again!',
+        welcomeSignupTitle: 'Join our Community',
+        welcomeSignupSubtitle: 'Sign up to start shipping, earning, or tracking.',
         chooseRole: 'Choose your role to continue',
         email: 'Email Address',
         password: 'Password',
@@ -293,7 +299,7 @@ export const translations = {
         noAccount: 'Don\'t have an account?',
         yesAccount: 'Already have an account?',
         createAccount: 'Create Account',
-        howUse: 'How do you want to use CocoColis?',
+        howUse: 'How do you want to use ColiNova?',
         wantShip: 'I want to ship parcels cheaply.',
         wantEarn: 'I want to earn money while traveling.',
         trackShipment: 'I want to track my shipment.',
@@ -394,7 +400,7 @@ export const translations = {
         itemInfo: 'Item Info',
         size: 'Size',
     howItWorksContent: {
-      lead: 'At CocoColis, we believe in a smarter way to ship. By connecting people, we reduce waste, save money, and build community.',
+      lead: 'At ColiNova, we believe in a smarter way to ship. By connecting people, we reduce waste, save money, and build community.',
       whyStarted: 'Why we started',
       whyStartedText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       ourMission: 'Our Mission',
@@ -407,7 +413,7 @@ export const translations = {
       ecoFriendlyText: 'Utilizing empty space on the road.',
     },
     trustSafetyContent: {
-      lead: 'Your peace of mind is our top priority at CocoColis.',
+      lead: 'Your peace of mind is our top priority at ColiNova.',
       insurance: 'Insurance:',
       insuranceText: 'Every shipment is insured. Payments are held until delivery is confirmed.',
       verification: 'User Verification:',
@@ -416,7 +422,7 @@ export const translations = {
       supportText: 'Our support team is always available to assist you with any queries or issues.',
     },
     helpCenterContent: {
-      lead: 'Welcome to the CocoColis Help Center.',
+      lead: 'Welcome to the ColiNova Help Center.',
       faq: 'Frequently Asked Questions:',
       faqText: 'Find answers to your most common questions.',
       contactUs: 'Contact Us:',
@@ -427,7 +433,7 @@ export const translations = {
       },
     
       fr: {
-        appName: 'CocoColis',
+        appName: 'ColiNova',
         login: 'Connexion',
         signup: 'Inscription',
         logout: 'Déconnexion',
@@ -459,15 +465,15 @@ export const translations = {
         publishTrip: 'Publier un trajet',
         iamTraveler: 'Je suis un voyageur',
         economical: 'Économique',
-        economicalDesc: 'Économisez jusqu\'à 80% sur vos envois.',
+        economicalDesc: 'Envoyez vos colis à moindre coût.',
         profitable: 'Rentable',
-        profitableDesc: 'Transformez vos voyages en source de revenus.',
+        profitableDesc: 'Gagnez de l\'argent en transportant des colis.',
         reliable: 'Fiable',
         reliableDesc: 'Vos colis sont assurés et suivis.',
         sustainable: 'Durable',
         sustainableDesc: 'Réduisez votre empreinte carbone en utilisant les trajets existants.',
         joinCommunity: 'Rejoignez notre communauté',
-        joinCommunityDesc: 'Inscrivez-vous maintenant et commencez à expédier ou à gagner.',
+        joinCommunityDesc: 'Inscrivez-vous maintenant et commencez à expédier, gagner ou suivre.',
     
         // Categories
         furniture: 'Meubles',
@@ -497,7 +503,10 @@ export const translations = {
         madeWithLove: 'Fait avec amour pour la communauté',
         
         // Auth
-        welcomeBack: 'Bon retour',
+        welcomeLoginTitle: 'Bon retour',
+        welcomeLoginSubtitle: 'Nous sommes heureux de vous revoir !',
+        welcomeSignupTitle: 'Rejoignez notre communauté',
+        welcomeSignupSubtitle: 'Inscrivez-vous pour commencer à expédier, gagner ou suivre.',
         chooseRole: 'Choisissez votre rôle',
         email: 'Adresse Email',
         password: 'Mot de passe',
@@ -505,7 +514,7 @@ export const translations = {
         noAccount: 'Pas de compte ?',
         yesAccount: 'Vous avez déja un compte ?',
         createAccount: 'Créer un compte',
-        howUse: 'Comment voulez-vous utiliser CocoColis ?',
+        howUse: 'Comment voulez-vous utiliser ColiNova ?',
         wantShip: 'Je veux expédier des colis.',
         wantEarn: 'Je veux rentabiliser mes trajets.',
         trackShipment: 'Je veux suivre mon colis.',
@@ -603,7 +612,7 @@ export const translations = {
         itemInfo: 'Informations sur l\'article',
         size: 'Taille',
     howItWorksContent: {
-      lead: 'Chez CocoColis, nous croyons en une manière plus intelligente d\'expédier. En connectant les gens, nous réduisons le gaspillage, économisons de l\'argent et bâtissons une communauté.',
+      lead: 'Chez ColiNova, nous croyons en une manière plus intelligente d\'expédier. En connectant les gens, nous réduisons le gaspillage, économisons de l\'argent et bâtissons une communauté.',
       whyStarted: 'Pourquoi nous avons commencé',
       whyStartedText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       ourMission: 'Notre mission',
@@ -616,7 +625,7 @@ export const translations = {
       ecoFriendlyText: 'Utilisation de l\'espace vide sur la route.',
     },
     trustSafetyContent: {
-      lead: 'Votre tranquillité d\'esprit est notre priorité absolue chez CocoColis.',
+      lead: 'Votre tranquillité d\'esprit est notre priorité absolue chez ColiNova.',
       insurance: 'Assurance :',
       insuranceText: 'Chaque envoi est assuré. Les paiements sont retenus jusqu\'à ce que la livraison soit confirmée.',
       verification: 'Vérification des utilisateurs :',
@@ -625,7 +634,7 @@ export const translations = {
       supportText: 'Notre équipe d\'assistance est toujours disponible pour vous aider en cas de questions ou de problèmes.',
     },
     helpCenterContent: {
-      lead: 'Bienvenue au Centre d\'aide de CocoColis.',
+      lead: 'Bienvenue au Centre d\'aide de ColiNova.',
       faq: 'Questions fréquemment posées :',
       faqText: 'Trouvez les réponses à vos questions les plus courantes.',
       contactUs: 'Nous contacter :',

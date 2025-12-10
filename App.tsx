@@ -110,7 +110,9 @@ const MainRouter = () => {
 };
 
 const App = () => {
+
   return (
+
     <LanguageProvider>
       <AppProvider>
         <MainRouter />

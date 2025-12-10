@@ -1,4 +1,4 @@
-# Project Overview: CocoColis (P2P Delivery Platform)
+# Project Overview: ColiNova (P2P Delivery Platform)
 
 ## 1. General Application Structure
 **Tech Stack:** React 18, Tailwind CSS, TypeScript.

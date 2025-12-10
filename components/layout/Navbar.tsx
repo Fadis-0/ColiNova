@@ -27,7 +27,7 @@ export const Navbar = () => {
                <Package className="h-6 w-6 text-primary" />
             </div>
             <span className="text-2xl font-black tracking-tight text-gray-900">
-              <span className="font-inter ">Coco<span className="font-inter text-primary">Colis</span></span>
+              <span className="font-inter ">ColiNova</span>
             </span> 
             {role !== UserRole.GUEST && (
               <span className={`mx-3 px-2.5 py-0.5 rounded-full bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wide border border-gray-200 hidden sm:inline-block`}>
