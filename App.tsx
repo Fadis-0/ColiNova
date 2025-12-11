@@ -10,6 +10,7 @@ import { Settings } from './pages/Settings';
 import { SenderDashboard } from './pages/sender/Dashboard';
 import { CreateParcel } from './pages/sender/CreateParcel';
 import { AvailableTrips } from './pages/sender/AvailableTrips';
+import { History } from './pages/History';
 import { TransporterDashboard } from './pages/transporter/Dashboard';
 import { ReceiverDashboard } from './pages/receiver/Dashboard';
 import { UserRole } from './types';
@@ -76,6 +77,7 @@ const MainRouter = ({ activeTab }) => {
     // Authenticated Routes
     if (hash === '#profile') return <Profile />;
     if (hash === '#settings') return <Settings />;
+    if (hash === '#history') return <History />;
 
     if (role === UserRole.SENDER) {
       if (hash === '#dashboard') return <SenderDashboard />;

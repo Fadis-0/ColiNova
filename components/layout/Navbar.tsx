@@ -55,6 +55,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                 >
                   {t('myDeliveries')}
                 </button>
+
               </div>
             )}
 
@@ -63,6 +64,8 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                 <div className="flex gap-3">
                   <Button variant="ghost" onClick={() => window.location.hash = '#dashboard'}>{t('myParcels')}</Button>
                   <Button variant="ghost" onClick={() => window.location.hash = '#available-trips'}>{t('availableTravelers')}</Button>
+                  <Button variant="ghost" onClick={() => window.location.hash = '#history'}>{t('viewHistory')}</Button>
+                  
                 </div>
               </div>
             )}
@@ -98,6 +101,9 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                         <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
                      </div>
                    )}
+                </div>
+                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
+                  {user?.avatar ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full"/> : user?.name.charAt(0)}
                 </div>
                 <Button variant="ghost" size="sm" onClick={logout} className="text-gray-400 hover:text-red-500">
                   <LogOut className="h-5 w-5" />
