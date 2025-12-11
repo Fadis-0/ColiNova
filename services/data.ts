@@ -74,6 +74,33 @@ export const updateParcelStatus = async (id: string, status: string): Promise<vo
     }
 }
 
+export const createTrip = async (trip: Partial<Trip>): Promise<Trip> => {
+  const { data, error } = await supabase
+    .from('trips')
+    .insert([trip])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating trip:', error);
+    throw error;
+  }
+
+  return data as Trip;
+};
+
+export const deleteTrip = async (tripId: number): Promise<void> => {
+  const { error } = await supabase
+    .from('trips')
+    .delete()
+    .eq('id', tripId);
+
+  if (error) {
+    console.error('Error deleting trip:', error);
+    throw error;
+  }
+};
+
 export const assignTransporter = async (parcelId: string, transporterId: string): Promise<void> => {
   const { error } = await supabase
     .from('parcels')

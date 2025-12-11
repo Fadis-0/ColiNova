@@ -14,7 +14,7 @@ import { ReceiverDashboard } from './pages/receiver/Dashboard';
 import { UserRole } from './types';
 import { StaticPage } from './pages/StaticPage';
 
-const MainRouter = () => {
+const MainRouter = ({ activeTab }) => {
   const { role, isLoading } = useApp();
   const { t } = useLanguage();
   const [hash, setHash] = useState(window.location.hash);
@@ -82,7 +82,7 @@ const MainRouter = () => {
     }
 
     if (role === UserRole.TRANSPORTER) {
-      if (hash === '#dashboard') return <TransporterDashboard />;
+      if (hash === '#dashboard') return <TransporterDashboard activeTab={activeTab} />;
     }
 
     if (role === UserRole.RECEIVER) {
@@ -101,7 +101,6 @@ const MainRouter = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-slate-900 font-sans">
-      <Navbar />
       <main>
         {renderContent()}
       </main>
@@ -110,12 +109,13 @@ const MainRouter = () => {
 };
 
 const App = () => {
+  const [activeTab, setActiveTab] = useState('find');
 
   return (
-
     <LanguageProvider>
       <AppProvider>
-        <MainRouter />
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <MainRouter activeTab={activeTab} />
       </AppProvider>
     </LanguageProvider>
   );

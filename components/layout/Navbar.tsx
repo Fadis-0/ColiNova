@@ -5,7 +5,7 @@ import { UserRole } from '../../types';
 import { Package, LogOut, Bell, Menu, X, Globe } from 'lucide-react';
 import { Button } from '../ui/Button';
 
-export const Navbar = () => {
+export const Navbar = ({ activeTab, setActiveTab }) => {
   const { user, role, logout } = useApp();
   const { t, setLanguage, language, dir } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,25 +37,26 @@ export const Navbar = () => {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-2 md:gap-6">
+          <div className="hidden md:flex items-center gap-2 md:gap-6 ">
             
-            {/* Language Switcher */}
-            <div className="relative">
-               <button 
-                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                 className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
-               >
-                 <Globe className="w-5 h-5" />
-                 <span className="mx-1 text-sm font-bold uppercase">{language}</span>
-               </button>
-               {isLangMenuOpen && (
-                 <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
-                    <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
-                    <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
-                    <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
-                 </div>
-               )}
-            </div>
+           
+
+            {role === UserRole.TRANSPORTER && (
+              <div className="flex items-center gap-8 mx-auto">
+                <button
+                  onClick={() => setActiveTab('find')}
+                  className={`py-2 px-4 text-lg font-medium ${activeTab === 'find' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
+                >
+                  {t('findDelivery')}
+                </button>
+                <button
+                  onClick={() => setActiveTab('trips')}
+                  className={`py-2 px-4 text-lg font-medium ${activeTab === 'trips' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
+                >
+                  {t('myDeliveries')}
+                </button>
+              </div>
+            )}
 
             {role === UserRole.GUEST ? (
               <>
@@ -72,19 +73,30 @@ export const Navbar = () => {
               </>
             ) : (
               <>
-                <button className="p-2 text-gray-400 hover:text-primary transition-colors relative">
-                  <Bell className="h-6 w-6" />
-                  <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-                </button>
-                
-                <Button variant="ghost" size="sm" onClick={() => window.location.hash = '#settings'} className="text-gray-400 hover:text-gray-600">
-                   {t('settings')}
-                </Button>
+                {/* Language Switcher */}
+                <div className="relative">
+                   <button 
+                     onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                     className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
+                   >
+                     <Globe className="w-5 h-5" />
+                     <span className="mx-1 text-sm font-bold uppercase">{language}</span>
+                   </button>
+                   {isLangMenuOpen && (
+                     <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
+                        <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
+                        <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
+                        <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
+                     </div>
+                   )}
+                </div>
                 <Button variant="ghost" size="sm" onClick={logout} className="text-gray-400 hover:text-red-500">
                   <LogOut className="h-5 w-5" />
                 </Button>
               </>
             )}
+
+
           </div>
 
           {/* Mobile menu button */}

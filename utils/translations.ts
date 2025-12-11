@@ -16,6 +16,7 @@ export const translations = {
     next: 'التالي',
     confirm: 'تأكيد',
     cancel: 'إلغاء',
+    delete: 'حذف',
     
     // Roles
     sender: 'مُرسل',
@@ -154,7 +155,7 @@ export const translations = {
         acceptDelivery: 'قبول التوصيل',
         detour: 'الانعطاف',
         co2saved: 'توفير CO2',
-        myDeliveries: 'شحناتي',
+        myDeliveries: 'رحلاتي',
         
         // Profile
         verifications: 'التحققات',
@@ -231,6 +232,7 @@ export const translations = {
         next: 'Next',
         confirm: 'Confirm',
         cancel: 'Cancel',
+        delete: 'Delete',
         
         // Roles
         sender: 'Sender',
@@ -369,7 +371,7 @@ export const translations = {
         acceptDelivery: 'Accept Delivery',
         detour: 'Detour',
         co2saved: 'CO2 Saved',
-        myDeliveries: 'My Deliveries',
+        myDeliveries: 'My Trips',
         
         // Profile
         verifications: 'Verifications',
@@ -446,6 +448,7 @@ export const translations = {
         next: 'Suivant',
         confirm: 'Confirmer',
         cancel: 'Annuler',
+        delete: 'Supprimer',
         
         // Roles
         sender: 'Expéditeur',
@@ -583,7 +586,7 @@ export const translations = {
         acceptDelivery: 'Accepter la livraison',
         detour: 'Détour',
         co2saved: 'CO2 Économisé',
-        myDeliveries: 'Mes livraisons',
+        myDeliveries: 'Mes voyages',
         
         verifications: 'Vérifications',
         idVerified: 'Identité vérifiée',
