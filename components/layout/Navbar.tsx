@@ -64,7 +64,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                 <div className="flex gap-3">
                   <Button variant="ghost" onClick={() => window.location.hash = '#dashboard'}>{t('myParcels')}</Button>
                   <Button variant="ghost" onClick={() => window.location.hash = '#available-trips'}>{t('availableTravelers')}</Button>
-                  <Button variant="ghost" onClick={() => window.location.hash = '#history'}>{t('viewHistory')}</Button>
+                  <Button variant="ghost" onClick={() => window.location.hash = '#history'}>{t('tripHistory')}</Button>
                   
                 </div>
               </div>
