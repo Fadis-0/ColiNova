@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import RealMap from '../../components/ui/RealMap';
-import { uploadParcelImage } from '../../services/data';
-import { Coordinates } from '../../types';
+import { uploadParcelImage, fetchTrips } from '../../services/data';
+import { Coordinates, Trip } from '../../types';
 import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/types';
 import { Button } from '../../components/ui/Button';
 import { ArrowLeft, ArrowRight, X, Loader2, Camera, Check } from 'lucide-react';
@@ -15,16 +15,25 @@ export const CreateParcel = () => {
   const [step, setStep] = useState(1);
   const [isUploading, setIsUploading] = useState(false);
   const [route, setRoute] = useState(null);
+  const [trips, setTrips] = useState<Trip[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     weight_kg: '',
-    receiverName: '',
+    receiver_name: 'receiverName',
     origin: { lat: null, lng: null, label: null } as Coordinates,
     destination: { lat: null, lng: null, label: null } as Coordinates,
-    price: '',
-    images: [] as string[]
+    images: [] as string[],
+    instructions: '',
+    receiver_phone_number: '',
+    size: 'M',
+    delivery_date: '',
+    transporter_id: null
   });
+
+  useEffect(() => {
+    fetchTrips().then(setTrips);
+  }, []);
 
   const ArrowNext = dir === 'rtl' ? ArrowLeft : ArrowRight;
   const ArrowBack = dir === 'rtl' ? ArrowRight : ArrowLeft;
@@ -137,7 +146,7 @@ export const CreateParcel = () => {
 
   const handleSubmit = async () => {
     // --- Form Validation ---
-    if (!formData.title || !formData.weight_kg || !formData.receiverName || !formData.price) {
+    if (!formData.title || !formData.weight_kg || !formData.delivery_date || !formData.size) {
       alert('Please fill all the details in Step 1.');
       return;
     }
@@ -150,16 +159,10 @@ export const CreateParcel = () => {
     setIsSubmitting(true);
     try {
       await addParcel({
-        title: formData.title,
-        description: formData.description,
+        ...formData,
         weight_kg: Number(formData.weight_kg),
-        receiver_name: formData.receiverName,
-        price: Number(formData.price),
         origin: { ...formData.origin, label: formData.origin.label || 'Custom Origin' },
         destination: { ...formData.destination, label: formData.destination.label || 'Custom Dest' },
-        images: formData.images,
-        // Hardcoding size for now as it's missing from the form
-        size: 'M', 
       });
       window.location.hash = '#dashboard';
     } catch (error: any) {
@@ -217,7 +220,7 @@ export const CreateParcel = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('itemTitle')}</label>
                 <input 
@@ -228,16 +231,7 @@ export const CreateParcel = () => {
                   required
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('receiverName')}</label>
-                <input 
-                  value={formData.receiverName}
-                  onChange={e => setFormData({...formData, receiverName: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
-                  placeholder="e.g. Jane Doe"
-                  required
-                />
-              </div>
+              
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{t('description')}</label>
@@ -247,6 +241,35 @@ export const CreateParcel = () => {
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
                 rows={3}
               />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('receiverPhoneNumber')}</label>
+                    <input 
+                    type="tel"
+                    value={formData.receiver_phone_number}
+                    onChange={e => setFormData({...formData, receiver_phone_number: e.target.value})}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('deliveryDate')}</label>
+                    <input 
+                    type="date"
+                    value={formData.delivery_date}
+                    onChange={e => setFormData({...formData, delivery_date: e.target.value})}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                    />
+                </div>
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('specialInstructions')}</label>
+                <textarea 
+                    value={formData.instructions}
+                    onChange={e => setFormData({...formData, instructions: e.target.value})}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
+                    rows={3}
+                />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -260,14 +283,18 @@ export const CreateParcel = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('proposedPrice')}</label>
-                <input 
-                  type="number"
-                  value={formData.price}
-                  onChange={e => setFormData({...formData, price: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none" 
-                  required
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('size')}</label>
+                <div className="flex gap-2">
+                    {['S', 'M', 'L', 'XL'].map(size => (
+                        <Button
+                            key={size}
+                            variant={formData.size === size ? 'primary' : 'outline'}
+                            onClick={() => setFormData({...formData, size})}
+                        >
+                            {size}
+                        </Button>
+                    ))}
+                </div>
               </div>
             </div>
           </div>
@@ -319,6 +346,8 @@ export const CreateParcel = () => {
           </div>
         )}
 
+        
+
         {step === 3 && (
           <div className="p-8 space-y-6">
             <h2 className="text-2xl font-bold text-gray-900">{t('reviewRequest')}</h2>
@@ -340,10 +369,6 @@ export const CreateParcel = () => {
                <div className="flex justify-between border-b border-gray-200 pb-2">
                 <span className="text-gray-500">{t('route')}</span>
                 <span className="font-medium">{formData.origin.label || 'A'} → {formData.destination.label || 'B'}</span>
-              </div>
-               <div className="flex justify-between border-b border-gray-200 pb-2">
-                <span className="text-gray-500">{t('price')}</span>
-                <span className="font-medium text-green-600">DZD{formData.price}</span>
               </div>
             </div>
           </div>

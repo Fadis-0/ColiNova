@@ -1,4 +1,4 @@
-import { ParcelStatus, Trip } from '../../types';
+import { Parcel, ParcelStatus, Trip } from '../../types';
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -15,11 +15,6 @@ export const SenderDashboard = () => {
   const [route, setRoute] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
-  const [trips, setTrips] = useState<Trip[]>([]);
-
-  useEffect(() => {
-    fetchTrips().then(setTrips);
-  }, []);
 
   const activeParcels = parcels.filter(p => p.status !== ParcelStatus.DELIVERED);
 
@@ -60,11 +55,13 @@ export const SenderDashboard = () => {
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-row" dir={dir}>
+    
+
       <div className={`flex-1 ${dir === 'rtl' ? 'lg:mr-0' : 'lg:ml-0'} p-4 lg:p-8`}>
         <div className="max-w-5xl mx-auto space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 bg-gradient-to-r from-[#1E1B4B] to-primary rounded-3xl p-8 text-white shadow-xl">
             <div>
-              <h1 className="text-3xl font-bold mb-2">{t('welcomeBack')}, {user?.name.split(' ')[0]} 👋</h1>
+              <h1 className="text-3xl font-bold mb-2">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]} 👋</h1>
               <p className="text-white/80">{t('activeShipments')}: {activeParcels.length}</p>
             </div>
             <Button className="bg-pink-500 hover:bg-gray-100 shadow-lg border-0" onClick={() => window.location.hash = '#create-parcel'}>
@@ -101,7 +98,7 @@ export const SenderDashboard = () => {
                       <div
                         key={parcel.id}
                         onClick={() => setSelectedParcel(parcel)}
-                        className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
+                        className="bg-white p-5 rounded-2xl border border-gray-100 mx-4 shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
                       >
                         <div className="flex justify-between items-start mb-4">
                               <div className="flex items-center gap-4">
@@ -139,9 +136,7 @@ export const SenderDashboard = () => {
                                     <span className="font-medium">{parcel?.destination.label}</span>
                                  </div>
                               </div>
-                              <div className="text-right">
-                                 <span className="block font-bold text-gray-900">DZD{parcel?.price}</span>
-                              </div>
+                            
                            </div>
                       </div>
                     ))
@@ -168,25 +163,6 @@ export const SenderDashboard = () => {
               )}
             </div>
             
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-gray-900">{t('availableTravelers')}</h2>
-              <div className="space-y-4">
-                {trips.length > 0 ? trips.map(trip => (
-                  <div key={trip.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <Users className="w-8 h-8 text-primary" />
-                      <div>
-                        <p className="font-bold">{trip.origin.label} <Arrow className="inline w-4 h-4" /> {trip.destination.label}</p>
-                        <p className="text-sm text-gray-500">
-                          {t('departure')}: {new Date(trip.departure_date).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm">{t('contact')}</Button>
-                  </div>
-                )) : <p>{t('noTrips')}</p>}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -211,7 +187,7 @@ export const SenderDashboard = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="space-y-1">
                 <p className="text-xs font-bold text-gray-500 uppercase">{t('pickup')}</p>
                 <p className="font-medium">{selectedParcel.origin.label}</p>
@@ -222,7 +198,7 @@ export const SenderDashboard = () => {
               </div>
             </div>
 
-            <div className="h-48 rounded-xl overflow-hidden border border-gray-200">
+            {/*<div className="h-48 rounded-xl overflow-hidden border border-gray-200">
               <RealMap
                 markers={[
                   { ...selectedParcel.origin, color: 'blue' },
@@ -230,16 +206,21 @@ export const SenderDashboard = () => {
                 ]}
                 route={route}
               />
-            </div>
+            </div>*/}
 
             <div className="border-t border-gray-100 pt-4">
               <h4 className="font-bold text-gray-900 mb-2">{t('itemInfo')}</h4>
               <div className="flex gap-4 text-sm text-gray-600">
                 <span className="bg-gray-100 px-2 py-1 rounded">{t('size')}: {selectedParcel.size}</span>
                 <span className="bg-gray-100 px-2 py-1 rounded">{t('weight')}: {selectedParcel.weight_kg}kg</span>
-                <span className="bg-gray-100 px-2 py-1 rounded">{t('value')}: DZD{selectedParcel.price}</span>
+                {/*<span className="bg-gray-100 px-2 py-1 rounded">{t('value')}: DZD{selectedParcel.price}</span>*/}
               </div>
-              <p className="mt-2 text-sm text-gray-500">{t('description')}: {selectedParcel.description}</p>
+              <div className="mt-5 text-sm text-gray-500">{t('description')}: 
+                <p>{selectedParcel.description}</p>
+              </div>
+              <div className="mt-5 text-sm text-gray-500">{t('specialInstructions')}: 
+                <p>{selectedParcel.instructions}</p>
+              </div>
             </div>
 
             <div className="flex gap-3 pt-2">

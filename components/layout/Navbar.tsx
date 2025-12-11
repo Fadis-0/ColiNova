@@ -37,7 +37,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-2 md:gap-6 ">
+          <div className={`hidden md:flex items-center gap-2 md:gap-6 ${role === UserRole.TRANSPORTER ? 'flex-1' : ''  }`}>
             
            
 
@@ -45,16 +45,25 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               <div className="flex items-center gap-8 mx-auto">
                 <button
                   onClick={() => setActiveTab('find')}
-                  className={`py-2 px-4 text-lg font-medium ${activeTab === 'find' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`py-2 px-4 text-md font-medium ${activeTab === 'find' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
                 >
                   {t('findDelivery')}
                 </button>
                 <button
                   onClick={() => setActiveTab('trips')}
-                  className={`py-2 px-4 text-lg font-medium ${activeTab === 'trips' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`py-2 px-4 text-md font-medium ${activeTab === 'trips' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
                 >
                   {t('myDeliveries')}
                 </button>
+              </div>
+            )}
+
+            {role === UserRole.SENDER && (
+              <div className="flex items-center gap-8 mx-auto">
+                <div className="flex gap-3">
+                  <Button variant="ghost" onClick={() => window.location.hash = '#dashboard'}>{t('myParcels')}</Button>
+                  <Button variant="ghost" onClick={() => window.location.hash = '#available-trips'}>{t('availableTravelers')}</Button>
+                </div>
               </div>
             )}
 

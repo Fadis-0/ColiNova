@@ -9,6 +9,7 @@ import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
 import { SenderDashboard } from './pages/sender/Dashboard';
 import { CreateParcel } from './pages/sender/CreateParcel';
+import { AvailableTrips } from './pages/sender/AvailableTrips';
 import { TransporterDashboard } from './pages/transporter/Dashboard';
 import { ReceiverDashboard } from './pages/receiver/Dashboard';
 import { UserRole } from './types';
@@ -79,6 +80,7 @@ const MainRouter = ({ activeTab }) => {
     if (role === UserRole.SENDER) {
       if (hash === '#dashboard') return <SenderDashboard />;
       if (hash === '#create-parcel') return <CreateParcel />;
+      if (hash === '#available-trips') return <AvailableTrips />;
     }
 
     if (role === UserRole.TRANSPORTER) {
