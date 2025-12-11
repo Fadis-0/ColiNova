@@ -283,11 +283,6 @@ export const CreateParcel = () => {
              </div>
              <div className="h-96 bg-gray-100 rounded-lg relative">
                <RealMap
-                 initialViewState={{
-                   latitude: 49.5,
-                   longitude: 8,
-                   zoom: 4
-                 }}
                  markers={[
                    { ...formData.origin, color: 'blue' },
                    { ...formData.destination, color: 'red' }

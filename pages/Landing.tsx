@@ -149,13 +149,7 @@ export const Landing = () => {
             </div>
             <div className="flex-1 w-full relative">
                 <div className="h-96 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-                  <RealMap
-                    initialViewState={{
-                      latitude: 36,
-                      longitude: 3,
-                      zoom: 5
-                    }}
-                  >
+                  <RealMap>
                     {fakeParcels.map(p => (
                       <Marker key={p.id} longitude={p.origin.lng!} latitude={p.origin.lat!} anchor="bottom">
                         <ParcelMarker parcel={p} onClick={() => {}} />

@@ -182,11 +182,6 @@ export const ReceiverDashboard = () => {
 
           <div className="h-96 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
              <RealMap
-                initialViewState={{
-                  latitude: (parcel.origin.lat + parcel.destination.lat) / 2,
-                  longitude: (parcel.origin.lng + parcel.destination.lng) / 2,
-                  zoom: 5
-                }}
                 markers={[
                   { ...parcel.origin, color: 'blue' },
                   { ...parcel.destination, color: 'red' }

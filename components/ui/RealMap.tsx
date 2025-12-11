@@ -12,11 +12,6 @@ interface MarkerProps extends Coordinates {
 }
 
 interface RealMapProps {
-  initialViewState: {
-    longitude: number;
-    latitude: number;
-    zoom: number;
-  };
   markers?: MarkerProps[];
   onLocationSelect?: (coords: { lat: number; lng: number }) => void;
   onGeocodeResult?: (e: MapboxglGeocodingEvent) => void;
@@ -25,7 +20,7 @@ interface RealMapProps {
   children?: React.ReactNode;
 }
 
-const RealMap: React.FC<RealMapProps> = ({ initialViewState, markers, onLocationSelect, onGeocodeResult, route, locationSelectionMode, children }) => {
+const RealMap: React.FC<RealMapProps> = ({ markers, onLocationSelect, onGeocodeResult, route, locationSelectionMode, children }) => {
   const handleClick = (event: MapLayerMouseEvent) => {
     if (onLocationSelect && locationSelectionMode) {
       onLocationSelect({
@@ -47,17 +42,28 @@ const RealMap: React.FC<RealMapProps> = ({ initialViewState, markers, onLocation
   }
 
   const cursorStyle = locationSelectionMode ? 'crosshair' : 'grab';
+  const guelmaLngLat = {
+    longitude: 7.4259,
+    latitude: 36.4624
+  };
+  const guelmaBounds: [[number, number], [number, number]] = [[7.30, 36.40], [7.55, 36.52]];
 
   return (
     <Map
       mapLib={maplibregl}
-      initialViewState={initialViewState}
+      initialViewState={{
+        ...guelmaLngLat,
+        zoom: 12
+      }}
       style={{ width: '100%', height: '100%' }}
       mapStyle={mapStyle}
       onClick={handleClick}
       cursor={cursorStyle}
+      minZoom={11}
+      maxZoom={16}
+      maxBounds={guelmaBounds}
     >
-      <GeocoderControl apiKey={apiKey} onResult={onGeocodeResult} />
+      <GeocoderControl apiKey={apiKey} onResult={onGeocodeResult} bbox={guelmaBounds} />
       {markers?.filter(marker => marker.lat && marker.lng).map((marker, index) => (
         <Marker key={index} longitude={marker.lng!} latitude={marker.lat!} anchor="bottom">
           <MapPin style={{ color: marker.color }} fill={marker.color} stroke="white" strokeWidth={2} size={32} />

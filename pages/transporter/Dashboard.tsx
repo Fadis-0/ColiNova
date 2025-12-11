@@ -142,13 +142,7 @@ export const TransporterDashboard = ({ activeTab }) => {
                 </div>
               </div>
               <div className="flex-1 relative bg-gray-200 hidden md:block">
-                <RealMap  
-                  initialViewState={{
-                    latitude: 36,
-                    longitude: 3,
-                    zoom: 5
-                  }}
-                >
+                <RealMap>
                   {filteredParcels.filter(p => p.origin && p.origin.lat != null && p.origin.lng != null).map(p => (
                     <Marker key={p.id} longitude={p.origin.lng!} latitude={p.origin.lat!} anchor="bottom">
                       <ParcelMarker parcel={p} onClick={setSelectedParcel} />

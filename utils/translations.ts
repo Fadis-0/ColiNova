@@ -117,6 +117,12 @@ export const translations = {
     trackLive: 'تتبع مباشر',
     matched: 'تم المطابقة',
     in_transit: 'في الطريق',
+    myParcels: "طرودي",
+    list: "قائمة",
+    map: "خريطة",
+    availableTravelers: "المسافرون المتاحون",
+    contact: "اتصل",
+    noTrips: "لا توجد رحلات متاحة في الوقت الحالي.",
 
     // Create Parcel
     whatSending: 'ماذا تريد أن ترسل؟',
@@ -333,6 +339,12 @@ export const translations = {
         trackLive: 'Track Live',
         matched: 'Matched',
         in_transit: 'In Transit',
+        myParcels: "My Parcels",
+        list: "List",
+        map: "Map",
+        availableTravelers: "Available Travelers",
+        contact: "Contact",
+        noTrips: "No available trips at the moment.",
     
         // Create Parcel
         whatSending: 'What are you sending?',
@@ -549,6 +561,12 @@ export const translations = {
         trackLive: 'Suivi en direct',
         matched: 'Matché',
         in_transit: 'En transit',
+        myParcels: "Mes Colis",
+        list: "Liste",
+        map: "Carte",
+        availableTravelers: "Voyageurs Disponibles",
+        contact: "Contacter",
+        noTrips: "Aucun voyage disponible pour le moment.",
     
         // Create Parcel
         whatSending: 'Que voulez-vous envoyer ?',

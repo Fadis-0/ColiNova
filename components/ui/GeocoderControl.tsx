@@ -1,5 +1,5 @@
 import { useControl } from 'react-map-gl';
-import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder';
+import MaplibreGeocoder, { GeocoderOptions } from '@maplibre/maplibre-gl-geocoder';
 import maplibregl from 'maplibre-gl';
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/types';
@@ -7,20 +7,26 @@ import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/type
 type GeocoderControlProps = {
   apiKey: string;
   onResult?: (e: MapboxglGeocodingEvent) => void;
+  bbox?: [number, number, number, number] | [[number, number], [number, number]];
 };
 
-export default function GeocoderControl({ apiKey, onResult }: GeocoderControlProps) {
+export default function GeocoderControl({ apiKey, onResult, bbox }: GeocoderControlProps) {
   const geocoder = useControl<MaplibreGeocoder>(
     () => {
+      const geocoderOptions: Partial<GeocoderOptions> = {
+        maplibregl: maplibregl,
+        marker: false,
+        showResultsWhileTyping: true,
+        showResultType: false,
+        popup: false,
+        apiKey: apiKey,
+      };
+      if (bbox) {
+        geocoderOptions.bbox = bbox;
+      }
+
       const ctrl = new MaplibreGeocoder(
-        {
-          maplibregl: maplibregl,
-          marker: false,
-          showResultsWhileTyping: true,
-          showResultType: false,
-          popup: false,
-          apiKey: apiKey,
-        },
+        geocoderOptions,
         {
           // API configuration
           url: 'https://api.maptiler.com/geocoding',
