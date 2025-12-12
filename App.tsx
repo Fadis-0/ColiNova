@@ -38,7 +38,7 @@ const MainRouter = ({ activeTab }) => {
   }, [role, hash]);
 
   const renderContent = () => {
-    if (isLoading && !role) {
+    if (isLoading) {
       return (
         <div className="min-h-[50vh] flex items-center justify-center">
           <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>

@@ -49,7 +49,7 @@ export const Profile = () => {
                 </div>
                 <div className="flex items-center gap-4">
                   <Phone className="w-5 h-5 text-gray-400" />
-                  <span className="text-gray-700">{user?.phone || t('noPhone')}</span>
+                  <span className="text-gray-700">{user?.phone}</span>
                 </div>
               </div>
             </div>

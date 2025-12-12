@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, UserRole, Parcel, Trip } from '../types';
-import { login as supabaseLogin, signup as supabaseSignup, signOut, getSession, getProfile } from '../services/auth';
+import { login as supabaseLogin, signup as supabaseSignup, signOut, getSession, getProfile, updateProfile } from '../services/auth';
 import { supabase } from '../utils/supabase';
 import { fetchParcels, fetchTrips, createParcel } from '../services/data';
 import * as api from '../services/mockApi';
@@ -15,6 +15,7 @@ interface AppContextType {
   login: (email: string, password: string, role: UserRole) => Promise<void>;
   register: (name: string, email: string, phone: String, password: string, role: UserRole) => Promise<void>;
   logout: () => void;
+  switchRole: (newRole: UserRole) => Promise<void>;
   refreshData: (currentRole: UserRole, userId?: string) => Promise<void>;
   addParcel: (p: Partial<Parcel>) => Promise<void>;
 }
@@ -34,6 +35,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const userData = await supabaseLogin(email, password);
       if (userData?.id) {
         const profile = await getProfile(userData.id);
+        if (profile.role !== selectedRole) {
+          await updateProfile(userData.id, selectedRole);
+          profile.role = selectedRole;
+        }
         const userWithRole = { ...userData, role: profile.role, name: profile.name, avatar: profile.avatar_url };
         setUser(userWithRole);
         setRole(profile.role);
@@ -66,6 +71,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRole(UserRole.GUEST);
     setParcels([]);
     window.location.hash = '#';
+  };
+
+  const switchRole = async (newRole: UserRole) => {
+    if (!user) return;
+    setIsLoading(true);
+    try {
+      await updateProfile(user.id, newRole);
+      const updatedUser = { ...user, role: newRole };
+      setUser(updatedUser);
+      setRole(newRole);
+      await refreshData(newRole, user.id);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const refreshData = async (currentRole: UserRole, userId?: string) => {
@@ -144,7 +163,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   return (
-    <AppContext.Provider value={{ user, role, parcels, trips, isLoading, login, register, logout, refreshData, addParcel }}>
+    <AppContext.Provider value={{ user, role, parcels, trips, isLoading, login, register, logout, switchRole, refreshData, addParcel }}>
       {children}
     </AppContext.Provider>
   );

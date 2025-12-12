@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { UserRole } from '../../types';
-import { Package, LogOut, Bell, Menu, X, Globe } from 'lucide-react';
+import { Package, LogOut, Bell, Menu, X, Globe, ChevronsUpDown } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
-  const { user, role, logout } = useApp();
+  const { user, role, logout, switchRole } = useApp();
   const { t, setLanguage, language, dir } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isRoleMenuOpen, setIsRoleMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   
   const handleLangChange = (lang: 'en' | 'fr' | 'ar') => {
      setLanguage(lang);
      setIsLangMenuOpen(false);
+  };
+
+  const handleRoleChange = (newRole: UserRole) => {
+    if (user) {
+      switchRole(newRole);
+    }
+    setIsRoleMenuOpen(false);
   };
 
   return (
@@ -29,15 +37,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
             <span className="text-2xl font-black tracking-tight text-gray-900">
               <span className="font-inter ">ColiNova</span>
             </span> 
-            {role !== UserRole.GUEST && (
-              <span className={`mx-3 px-2.5 py-0.5 rounded-full bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wide border border-gray-200 hidden sm:inline-block`}>
-                {t(role.toLowerCase() as any)}
-              </span>
-            )}
           </div>
           
           {/* Desktop Navigation */}
-          <div className={`hidden md:flex items-center gap-2 md:gap-6 ${role === UserRole.TRANSPORTER ? 'flex-1' : ''  }`}>
+          <div className={`hidden md:flex items-center gap-2 md:gap-6 ${role === UserRole.TRANSPORTER || role === UserRole.SENDER ? 'flex-1' : ''  }`}>
             
            
 
@@ -83,10 +86,70 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   <Button onClick={() => window.location.hash = '#signup'} className="shadow-lg shadow-primary/20">{t('signup')}</Button>
                 </div>
 
+                <>
+                {/* Language Switcher */}
+                <div className="relative">
+                    <button 
+                       onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                       className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
+                     >
+                       <Globe className="w-5 h-5" />
+                       <span className="mx-1 text-sm font-bold uppercase">{language}</span>
+                     </button>
+                     {isLangMenuOpen && (
+                       <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
+                          <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
+                          <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
+                          <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
+                       </div>
+                     )}
+                  </div>
+                </>
+
 
               </>
             ) : (
               <>
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsRoleMenuOpen(!isRoleMenuOpen)}
+                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <span className={`px-2.5 py-0.5 rounded-full bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wide border border-gray-200`}>
+                      {t(role.toLowerCase() as any)}
+                    </span>
+                    <ChevronsUpDown className="w-4 h-4 text-gray-400" />
+                  </button>
+                  {isRoleMenuOpen && (
+                    <div className={`absolute top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
+                       <button onClick={() => handleRoleChange(UserRole.SENDER)} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">{t('sender')}</button>
+                       <button onClick={() => handleRoleChange(UserRole.TRANSPORTER)} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">{t('transporter')}</button>
+                       <button onClick={() => handleRoleChange(UserRole.RECEIVER)} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">{t('receiver')}</button>
+                    </div>
+                  )}
+                </div>
+
+                <>
+                {/* Language Switcher */}
+                <div className="relative">
+                     <button 
+                       onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                       className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
+                     >
+                       <Globe className="w-5 h-5" />
+                       <span className="mx-1 text-sm font-bold uppercase">{language}</span>
+                     </button>
+                     {isLangMenuOpen && (
+                       <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
+                          <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
+                          <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
+                          <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
+                       </div>
+                     )}
+                  </div>
+                </>
+
+
                 <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
                   {user?.avatar ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full"/> : user?.name.charAt(0)}
                 </div>
@@ -96,31 +159,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               </>
             )}
 
-            <>
-                {/* Language Switcher */}
-                <div className="relative">
-                   <button 
-                     onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                     className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
-                   >
-                     <Globe className="w-5 h-5" />
-                     <span className="mx-1 text-sm font-bold uppercase">{language}</span>
-                   </button>
-                   {isLangMenuOpen && (
-                     <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
-                        <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
-                        <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
-                        <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
-                     </div>
-                   )}
-                </div>
-                {/*<div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
-                  {user?.avatar ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full"/> : user?.name.charAt(0)}
-                </div>
-                <Button variant="ghost" size="sm" onClick={logout} className="text-gray-400 hover:text-red-500">
-                  <LogOut className="h-5 w-5" />
-                </Button>*/}
-              </>
+            
 
 
           </div>

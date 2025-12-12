@@ -62,3 +62,16 @@ export const getProfile = async (userId: string) => {
 
   return data;
 };
+
+export const updateProfile = async (userId: string, role: UserRole) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({ role })
+    .eq('id', userId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
