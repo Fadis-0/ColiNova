@@ -9,9 +9,10 @@ export const History = () => {
   
   // Mock data for completed trips - replace with actual data later
   const completedTrips = [
-    { id: 1, from: 'Paris, France', to: 'Lille, France', date: '2024-07-15', items: 2 },
-    { id: 2, from: 'Algiers, Algeria', to: 'Oran, Algeria', date: '2024-06-28', items: 1 },
-    { id: 3, from: 'New York, USA', to: 'Boston, USA', date: '2024-05-10', items: 3 },
+    { id: 1, from: 'Guelma, Guelma, Algeria', to: 'Boumahra Ahmed, Guelma, Algeria', date: '2024-07-15', items: 2 },
+    { id: 2, from: 'Belkhir, Guelma, Algeria', to: 'Guelma, Guelma, Algeria', date: '2024-06-28', items: 1 },
+    { id: 3, from: 'Guelma, Guelma, Algeria', to: 'Boumahra Ahmed, Guelma, Algeria', date: '2024-07-15', items: 2 }
+
   ];
 
   return (

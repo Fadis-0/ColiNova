@@ -7,6 +7,8 @@ import RealMap from '../../components/ui/RealMap';
 import { Plus, Package, Clock, MapPin, List, Map, Users, ArrowRight, ArrowLeft, X, AlertCircle } from 'lucide-react';
 import { Modal } from '../../components/ui/Modal';
 import { fetchTrips } from '../../services/data';
+import { Footer } from '../../components/layout/Footer';
+
 
 export const SenderDashboard = () => {
   const { parcels, user } = useApp();
@@ -54,7 +56,7 @@ export const SenderDashboard = () => {
   }, [selectedParcel]);
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-row" dir={dir}>
+    <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-col gap-48" dir={dir}>
     
 
       <div className={`flex-1 ${dir === 'rtl' ? 'lg:mr-0' : 'lg:ml-0'} p-4 lg:p-8`}>
@@ -229,6 +231,9 @@ export const SenderDashboard = () => {
           </div>
         )}
       </Modal>
+
+      <Footer />
+
     </div>
   );
 };

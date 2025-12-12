@@ -69,7 +69,7 @@ export const Landing = () => {
                      </Button>
                   </div>
                </div>
-            </div>
+            </div> 
           </div>
         </div>
       </section>
@@ -100,8 +100,10 @@ export const Landing = () => {
       <section className="py-24 bg-gray-50 pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">{t('appName')}</h2>
-            <p className="text-lg text-gray-600">{t('heroSubtitle')}</p>
+            <span className="text-5xl font-black tracking-tight text-gray-900 ">
+              <span className="font-inter ">ColiNova</span>
+            </span> 
+            <p className="text-lg text-gray-600 mt-4">{t('heroSubtitle')}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-12">

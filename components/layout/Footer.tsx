@@ -14,7 +14,7 @@ export const Footer = () => {
                 <div className={`bg-white/10 p-2 rounded-xl ${dir === 'rtl' ? 'ml-2' : 'mr-2'}`}>
                   <Package className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-black text-white tracking-tight">Coco<span className="text-primary-400">Colis</span></span>
+                <span className="text-2xl font-black text-white tracking-tight">Coli<span className="text-primary-400">Nova</span></span>
              </div>
              <p className="text-gray-400 text-sm leading-relaxed mb-8">
                {t('heroSubtitle')}
