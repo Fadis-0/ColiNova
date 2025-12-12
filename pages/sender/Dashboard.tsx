@@ -8,6 +8,7 @@ import { Plus, Package, Clock, MapPin, List, Map, Users, ArrowRight, ArrowLeft, 
 import { Modal } from '../../components/ui/Modal';
 import { fetchTrips } from '../../services/data';
 import { Footer } from '../../components/layout/Footer';
+import { BackButton } from '../../components/ui/BackButton';
 
 
 export const SenderDashboard = () => {
@@ -57,11 +58,10 @@ export const SenderDashboard = () => {
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-col gap-48" dir={dir}>
-    
-
       <div className={`flex-1 ${dir === 'rtl' ? 'lg:mr-0' : 'lg:ml-0'} p-4 lg:p-8`}>
         <div className="max-w-5xl mx-auto space-y-8">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6 bg-gradient-to-r from-[#1E1B4B] to-primary rounded-3xl p-8 text-white shadow-xl">
+        
+          <div className="mt-4 flex flex-col md:flex-row justify-between items-end gap-6 bg-gradient-to-r from-[#1E1B4B] to-primary rounded-3xl p-8 text-white shadow-xl">
             <div>
               <h1 className="text-3xl font-bold mb-2">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]} 👋</h1>
               <p className="text-white/80">{t('activeShipments')}: {activeParcels.length}</p>

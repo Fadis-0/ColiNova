@@ -16,6 +16,7 @@ interface AppContextType {
   register: (name: string, email: string, phone: String, password: string, role: UserRole) => Promise<void>;
   logout: () => void;
   switchRole: (newRole: UserRole) => Promise<void>;
+  updateUserAvatar: (avatarUrl: string) => void;
   refreshData: (currentRole: UserRole, userId?: string) => Promise<void>;
   addParcel: (p: Partial<Parcel>) => Promise<void>;
 }
@@ -84,6 +85,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       await refreshData(newRole, user.id);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const updateUserAvatar = (avatarUrl: string) => {
+    if (user) {
+      const updatedUser = { ...user, avatar: avatarUrl };
+      setUser(updatedUser);
     }
   };
 
@@ -163,7 +171,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   return (
-    <AppContext.Provider value={{ user, role, parcels, trips, isLoading, login, register, logout, switchRole, refreshData, addParcel }}>
+    <AppContext.Provider value={{ user, role, parcels, trips, isLoading, login, register, logout, switchRole, updateUserAvatar, refreshData, addParcel }}>
       {children}
     </AppContext.Provider>
   );

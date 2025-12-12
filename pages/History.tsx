@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from '../components/ui/Button';
 import { Clock, Package, ArrowRight, ArrowLeft } from 'lucide-react';
+import { BackButton } from '../components/ui/BackButton';
 
 export const History = () => {
   const { t, dir } = useLanguage();
@@ -17,8 +18,9 @@ export const History = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 lg:p-8" dir={dir}>
-      <div className="max-w-4xl mt-4 mx-auto">
-        <div className="flex justify-between items-center mb-8">
+      <div className="max-w-4xl mx-auto">
+        <BackButton />
+        <div className="flex mt-8 justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">{t('tripHistory')}</h1>
         </div>
 

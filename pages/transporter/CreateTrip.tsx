@@ -3,6 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui/Button';
 import { createTrip } from '../../services/data';
+import { BackButton } from '../../components/ui/BackButton';
 
 export const CreateTrip = ({ onClose, onTripCreated }) => {
   const { user, refreshData, role } = useApp();
@@ -37,6 +38,7 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <BackButton />
       <h2 className="text-2xl font-bold">{t('publishTrip')}</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('origin')}</label>

@@ -3,6 +3,7 @@ import { Button } from '../components/ui/Button';
 import { Bell, Lock, User, CreditCard, LogOut, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
+import { BackButton } from '../components/ui/BackButton';
 
 export const Settings = () => {
   const { logout } = useApp();
@@ -85,6 +86,7 @@ export const Settings = () => {
   return (
     <div className="bg-gray-50 min-h-screen py-10" dir={dir}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <BackButton />
         <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('settings')}</h1>
         
         <div className="flex flex-col md:flex-row gap-8">

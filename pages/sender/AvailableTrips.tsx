@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/Button';
 import { Trip } from '../../types';
 import { ArrowRight, ArrowLeft, Users } from 'lucide-react';
 import { fetchTrips } from '../../services/data';
+import { BackButton } from '../../components/ui/BackButton';
 
 export const AvailableTrips = () => {
   const { t, dir } = useLanguage();
@@ -20,6 +21,7 @@ export const AvailableTrips = () => {
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-row" dir={dir}>
       <div className={`flex-1 ${dir === 'rtl' ? 'lg:mr-0' : 'lg:ml-0'} p-4 lg:p-8`}>
         <div className="max-w-4xl mx-auto space-y-8">
+          <BackButton />
           <div className="space-y-4">
             <h2 className="text-3xl font-bold mt-4 text-gray-900">{t('availableTravelers')}</h2>
             <div className="space-y-4">

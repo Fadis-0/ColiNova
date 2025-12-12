@@ -3,6 +3,8 @@ import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from '../components/ui/Button';
 import { User, Mail, Phone, Star, Package, CheckCircle, Clock } from 'lucide-react';
+import { Avatar } from '../components/ui/Avatar';
+import { BackButton } from '../components/ui/BackButton';
 
 export const Profile = () => {
   const { user } = useApp();
@@ -11,20 +13,10 @@ export const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 lg:p-8" dir={dir}>
       <div className="max-w-4xl mx-auto">
+        <BackButton />
         {/* Header */}
         <div className="bg-white rounded-3xl shadow-lg p-8 mb-8 flex flex-col md:flex-row items-center gap-8">
-          <div className="relative">
-            <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary to-pink-500 flex items-center justify-center text-white font-bold text-4xl">
-              {user?.avatar ? (
-                <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full" />
-              ) : (
-                user?.name.charAt(0)
-              )}
-            </div>
-            <span className="absolute bottom-0 right-0 h-6 w-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-              <CheckCircle className="h-4 w-4 text-white" />
-            </span>
-          </div>
+          <Avatar />
           <div className="text-center md:text-left">
             <h1 className="text-3xl font-bold text-gray-900">{user?.name}</h1>
             <p className="text-gray-500">{t('memberSince')} {new Date(user?.created_at).toLocaleDateString()}</p>

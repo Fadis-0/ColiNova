@@ -8,6 +8,7 @@ import { Coordinates, Trip } from '../../types';
 import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/types';
 import { Button } from '../../components/ui/Button';
 import { ArrowLeft, ArrowRight, X, Loader2, Camera, Check } from 'lucide-react';
+import { BackButton } from '../../components/ui/BackButton';
 
 export const CreateParcel = () => {
   const { addParcel } = useApp();
@@ -174,6 +175,7 @@ export const CreateParcel = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12" dir={dir}>
+      <BackButton />
       <div className="mb-8">
          <div className="flex items-center justify-between text-sm font-medium text-gray-500 mb-2">
            
