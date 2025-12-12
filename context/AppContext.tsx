@@ -39,7 +39,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           await updateProfile(userData.id, selectedRole);
           profile.role = selectedRole;
         }
-        const userWithRole = { ...userData, role: profile.role, name: profile.name, avatar: profile.avatar_url };
+        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url };
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
@@ -55,7 +55,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const userData = await supabaseSignup(name, email, phone, password, selectedRole);
       if (userData?.id) {
         const profile = await getProfile(userData.id);
-        const userWithRole = { ...userData, role: profile.role, name: profile.name, avatar: profile.avatar_url };
+        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url };
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
