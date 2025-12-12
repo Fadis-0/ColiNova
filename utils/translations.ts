@@ -3,7 +3,7 @@ export type Language = 'en' | 'fr' | 'ar';
 export const translations = {
   ar: {
     // General
-    appName: 'كوكو كوليس',
+    appName: 'ColiNova',
     login: 'دخول',
     signup: 'تسجيل جديد',
     logout: 'خروج',
@@ -17,6 +17,7 @@ export const translations = {
     confirm: 'تأكيد',
     cancel: 'إلغاء',
     delete: 'حذف',
+    home: 'الرئيسية',
     
     // Roles
     sender: 'مُرسل',
@@ -161,6 +162,7 @@ export const translations = {
         
         // Transporter
         findDelivery: 'ابحث عن توصيلة',
+        findDeliverySubtitle: 'تصفح الطرود المتاحة وابحث عن وظيفة التوصيل التالية.',
         whereGoingQ: 'إلى أين أنت ذاهب؟',
         anyDate: 'أي تاريخ',
         fitsCar: 'تناسب سيارة',
@@ -170,6 +172,9 @@ export const translations = {
         detour: 'الانعطاف',
         co2saved: 'توفير CO2',
         myDeliveries: 'رحلاتي',
+        myTrips: 'رحلاتي',
+        myTripsSubtitle: 'إدارة رحلاتك المنشورة وعرض سجل التسليم الخاص بك.',
+        transporterDashboardSubtitle: 'إدارة رحلاتك وتسليماتك.',
         
         // Profile
         verifications: 'التحققات',
@@ -303,6 +308,8 @@ export const translations = {
         appliancesDesc: 'Fridge, Washing machine',
         vehicles: 'Vehicles',
         vehiclesDesc: 'Bikes, Scooters, Parts',
+
+        home: 'Home',
         
         // Features
         priceTitle: 'Unbeatable Prices',
@@ -407,6 +414,7 @@ export const translations = {
         
         // Transporter
         findDelivery: 'Find a delivery',
+        findDeliverySubtitle: 'Browse available parcels and find your next delivery job.',
         whereGoingQ: 'Where are you going?',
         anyDate: 'Any date',
         fitsCar: 'Fits in Car',
@@ -416,6 +424,9 @@ export const translations = {
         detour: 'Detour',
         co2saved: 'CO2 Saved',
         myDeliveries: 'My Trips',
+        myTrips: 'My Trips',
+        myTripsSubtitle: 'Manage your published trips and view your delivery history.',
+        transporterDashboardSubtitle: 'Manage your trips and deliveries.',
         
         // Profile
         verifications: 'Verifications',
@@ -511,6 +522,7 @@ export const translations = {
         confirm: 'Confirmer',
         cancel: 'Annuler',
         delete: 'Supprimer',
+        home: 'Acceuil',
         
         // Roles
         sender: 'Expéditeur',
@@ -652,6 +664,7 @@ export const translations = {
         specialInstructions: "Instructions Spéciales",
         
         findDelivery: 'Trouver une livraison',
+        findDeliverySubtitle: 'Parcourez les colis disponibles et trouvez votre prochain travail de livraison.',
         whereGoingQ: 'Où allez-vous ?',
         anyDate: 'Peu importe la date',
         fitsCar: 'Rentre dans une voiture',
@@ -661,6 +674,9 @@ export const translations = {
         detour: 'Détour',
         co2saved: 'CO2 Économisé',
         myDeliveries: 'Mes voyages',
+        myTrips: 'Mes voyages',
+        myTripsSubtitle: 'Gérez vos voyages publiés et consultez votre historique de livraison.',
+        transporterDashboardSubtitle: 'Gérez vos voyages et livraisons.',
         
         reviews: 'Avis',
         memberSince: 'Membre depuis',

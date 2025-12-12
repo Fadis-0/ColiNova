@@ -9,7 +9,7 @@ import WelcomeMessage from '../components/ui/WelcomeMessage';
 export const Login = () => {
   const { login } = useApp();
   const { t, dir } = useLanguage();
-  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.SENDER);
+  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.TRANSPORTER);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
@@ -37,8 +37,8 @@ export const Login = () => {
 
             <div className="grid grid-cols-3 gap-3 mb-8">
               {[
-                { id: UserRole.SENDER, label: t('sender'), icon: Package },
                 { id: UserRole.TRANSPORTER, label: t('transporter'), icon: Truck },
+                { id: UserRole.SENDER, label: t('sender'), icon: Package },
                 { id: UserRole.RECEIVER, label: t('receiver'), icon: UserCheck },
               ].map((role) => (
                 <button

@@ -15,8 +15,10 @@ import { TransporterDashboard } from './pages/transporter/Dashboard';
 import { ReceiverDashboard } from './pages/receiver/Dashboard';
 import { UserRole } from './types';
 import { StaticPage } from './pages/StaticPage';
+import { FindDelivery } from './pages/transporter/FindDelivery';
+import { MyTrips } from './pages/transporter/MyTrips';
 
-const MainRouter = ({ activeTab }) => {
+const MainRouter = () => {
   const { role, isLoading } = useApp();
   const { t } = useLanguage();
   const [hash, setHash] = useState(window.location.hash);
@@ -67,7 +69,7 @@ const MainRouter = ({ activeTab }) => {
     // Protected Routes Check
     if (role === UserRole.GUEST) {
       // If trying to access protected pages while logged out, redirect to login
-      if (['#dashboard', '#profile', '#settings', '#create-parcel'].includes(hash)) {
+      if (['#dashboard', '#profile', '#settings', '#create-parcel', '#find-delivery', '#my-trips'].includes(hash)) {
          window.location.hash = '#login';
          return <Login />;
       }
@@ -86,7 +88,9 @@ const MainRouter = ({ activeTab }) => {
     }
 
     if (role === UserRole.TRANSPORTER) {
-      if (hash === '#dashboard') return <TransporterDashboard activeTab={activeTab} />;
+      if (hash === '#dashboard') return <TransporterDashboard />;
+      if (hash === '#find-delivery') return <FindDelivery />;
+      if (hash === '#my-trips') return <MyTrips />;
     }
 
     if (role === UserRole.RECEIVER) {
@@ -113,13 +117,11 @@ const MainRouter = ({ activeTab }) => {
 };
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('find');
-
   return (
     <LanguageProvider>
       <AppProvider>
-        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <MainRouter activeTab={activeTab} />
+        <Navbar />
+        <MainRouter />
       </AppProvider>
     </LanguageProvider>
   );

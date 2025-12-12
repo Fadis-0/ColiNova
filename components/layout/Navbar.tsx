@@ -46,19 +46,9 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
             {role === UserRole.TRANSPORTER && (
               <div className="flex items-center gap-8 mx-auto">
-                <button
-                  onClick={() => setActiveTab('find')}
-                  className={`py-2 px-4 text-md font-medium ${activeTab === 'find' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  {t('findDelivery')}
-                </button>
-                <button
-                  onClick={() => setActiveTab('trips')}
-                  className={`py-2 px-4 text-md font-medium ${activeTab === 'trips' ? 'bg-primary/10 text-primary rounded-lg' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  {t('myDeliveries')}
-                </button>
-
+                <a href="#dashboard" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('home')}</a>
+                <a href="#find-delivery" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('findDelivery')}</a>
+                <a href="#my-trips" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('myDeliveries')}</a>
               </div>
             )}
 
@@ -73,6 +63,8 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               </div>
             )}
 
+
+
             {role === UserRole.GUEST ? (
               <>
                  <div className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
@@ -86,25 +78,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   <Button onClick={() => window.location.hash = '#signup'} className="shadow-lg shadow-primary/20">{t('signup')}</Button>
                 </div>
 
-                <>
-                {/* Language Switcher */}
-                <div className="relative">
-                    <button 
-                       onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                       className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
-                     >
-                       <Globe className="w-5 h-5" />
-                       <span className="mx-1 text-sm font-bold uppercase">{language}</span>
-                     </button>
-                     {isLangMenuOpen && (
-                       <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
-                          <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
-                          <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
-                          <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
-                       </div>
-                     )}
-                  </div>
-                </>
+                
 
 
               </>
@@ -141,6 +115,28 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                 </Button>
               </>
             )}
+
+            <>
+                {/* Language Switcher */}
+                <div className="relative">
+                    <button 
+                       onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                       className="flex items-center text-gray-500 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-50"
+                     >
+                       <Globe className="w-5 h-5" />
+                       <span className="mx-1 text-sm font-bold uppercase">{language}</span>
+                     </button>
+                     {isLangMenuOpen && (
+                       <div className={`absolute top-full mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 ${dir === 'rtl' ? 'left-0' : 'right-0'}`}>
+                          <button onClick={() => handleLangChange('ar')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">العربية</button>
+                          <button onClick={() => handleLangChange('en')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">English</button>
+                          <button onClick={() => handleLangChange('fr')} className="block w-full text-right px-4 py-2 text-sm hover:bg-gray-50 text-gray-700">Français</button>
+                       </div>
+                     )}
+                  </div>
+                </>
+
+
 
             
 

@@ -125,6 +125,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             ...session.user,
             role: profile.role,
             name: profile.name,
+            phone: profile.phone,
             avatar: profile.avatar_url,
           };
           setUser(userWithRole);
@@ -150,6 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               ...session.user,
               role: profile.role,
               name: profile.name,
+              phone: profile.phone,
               avatar: profile.avatar_url,
             };
             setUser(userWithRole);

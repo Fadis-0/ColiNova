@@ -12,6 +12,7 @@ export const Avatar = () => {
 
   useEffect(() => {
     if (user?.avatar) {
+      setLoadingImage(true);
       setAvatarUrl(user.avatar);
     }
   }, [user]);
@@ -19,7 +20,6 @@ export const Avatar = () => {
   const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);
-      setLoadingImage(true);
       console.log('Uploading avatar...');
       if (!event.target.files || event.target.files.length === 0) {
         throw new Error('You must select an image to upload.');
@@ -59,6 +59,7 @@ export const Avatar = () => {
       }
       console.log('Profile updated successfully.');
 
+      setLoadingImage(true);
       setAvatarUrl(newAvatarUrl);
       updateUserAvatar(newAvatarUrl);
     } catch (error) {
