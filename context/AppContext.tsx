@@ -13,7 +13,7 @@ interface AppContextType {
   trips: Trip[];
   isLoading: boolean;
   login: (email: string, password: string, role: UserRole) => Promise<void>;
-  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
+  register: (name: string, email: string, phone: String, password: string, role: UserRole) => Promise<void>;
   logout: () => void;
   refreshData: (currentRole: UserRole, userId?: string) => Promise<void>;
   addParcel: (p: Partial<Parcel>) => Promise<void>;
@@ -44,10 +44,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const register = async (name: string, email: string, password: string, selectedRole: UserRole) => {
+  const register = async (name: string, email: string, phone: string, password: string, selectedRole: UserRole) => {
     setIsLoading(true);
     try {
-      const userData = await supabaseSignup(email, password, name, selectedRole);
+      const userData = await supabaseSignup(name, email, phone, password, selectedRole);
       if (userData?.id) {
         const profile = await getProfile(userData.id);
         const userWithRole = { ...userData, role: profile.role, name: profile.name, avatar: profile.avatar_url };

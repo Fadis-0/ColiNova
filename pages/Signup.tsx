@@ -9,12 +9,13 @@ import WelcomeMessage from '../components/ui/WelcomeMessage';
 export const Signup = () => {
   const { register } = useApp();
   const { t, dir } = useLanguage();
-  const [step, setStep] = useState(1);
-  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.SENDER);
+  const [step, setStep] = useState(2);
+  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.TRANSPORTER);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     password: '',
   });
   const [showWelcome, setShowWelcome] = useState(true);
@@ -23,7 +24,7 @@ export const Signup = () => {
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   const handleRegister = async () => {
-    await register(`${formData.firstName} ${formData.lastName}`, formData.email, formData.password, selectedRole);
+    await register(`${formData.firstName} ${formData.lastName}`, formData.email, formData.phone, formData.password, selectedRole);
   };
 
   const handleFadeOut = () => {
@@ -36,31 +37,21 @@ export const Signup = () => {
       {showWelcome && <WelcomeMessage onFadeOut={handleFadeOut} title="welcomeSignupTitle" subtitle="welcomeSignupSubtitle" />}
       {showForm && (
         <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" dir={dir}>
-          <div className="max-w-lg w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100 animate-in fade-in">
-            <div className="text-center">
-              <h2 className="mt-2 text-3xl font-black text-gray-900">{t('createAccount')}</h2>
-              <p className="mt-2 text-sm text-gray-600">{t('joinCommunity')}</p>
-            </div>
+          <form onSubmit={(e) => { e.preventDefault(); handleRegister(); }} className="max-w-lg w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100 animate-in fade-in">
+            
+            {step === 2 ? (
+                <div className="text-center">
+                  <h2 className="mt-2 text-3xl font-black text-gray-900">{t('createAccount')}</h2>
+                  <p className="mt-2 text-sm text-gray-600">{t('joinCommunity')}</p>
+                </div>
+              ) : (
+                <></>
+              )}
 
             {step === 1 ? (
-              <div className="space-y-6 animate-in fade-in slide-in-from-right-8">
-                <p className="text-center font-medium text-gray-900">{t('howUse')}</p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <button
-                    onClick={() => setSelectedRole(UserRole.SENDER)}
-                    className={`p-6 rounded-2xl border-2 text-left transition-all group ${
-                      selectedRole === UserRole.SENDER
-                        ? 'border-primary bg-primary/5 shadow-md'
-                        : 'border-gray-200 hover:border-primary/50'
-                    }`}
-                  >
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${selectedRole === UserRole.SENDER ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
-                      <Package className="w-5 h-5"/>
-                    </div>
-                    <h3 className={`font-bold ${selectedRole === UserRole.SENDER ? 'text-primary' : 'text-gray-900'}`}>{t('sender')}</h3>
-                    <p className="text-xs text-gray-500 mt-1">{t('wantShip')}</p>
-                  </button>
-
+              <data  className="space-y-6 animate-in fade-in slide-in-from-right-8">
+                <p className="text-center text-2xl font-medium text-gray-900 mt-4">{t('howUse')} <span className="font-bold text-3xl"> ColiNova</span></p>
+                <div className="grid grid-cols-1 md:grid-cols-3 pt-4 gap-4">
                   <button
                     onClick={() => setSelectedRole(UserRole.TRANSPORTER)}
                     className={`p-6 rounded-2xl border-2 text-left transition-all group ${
@@ -74,6 +65,21 @@ export const Signup = () => {
                     </div>
                     <h3 className={`font-bold ${selectedRole === UserRole.TRANSPORTER ? 'text-primary' : 'text-gray-900'}`}>{t('transporter')}</h3>
                     <p className="text-xs text-gray-500 mt-1">{t('wantEarn')}</p>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedRole(UserRole.SENDER)}
+                    className={`p-6 rounded-2xl border-2 text-left transition-all group ${
+                      selectedRole === UserRole.SENDER
+                        ? 'border-primary bg-primary/5 shadow-md'
+                        : 'border-gray-200 hover:border-primary/50'
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${selectedRole === UserRole.SENDER ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
+                      <Package className="w-5 h-5"/>
+                    </div>
+                    <h3 className={`font-bold ${selectedRole === UserRole.SENDER ? 'text-primary' : 'text-gray-900'}`}>{t('sender')}</h3>
+                    <p className="text-xs text-gray-500 mt-1">{t('wantShip')}</p>
                   </button>
 
                   <button
@@ -92,12 +98,15 @@ export const Signup = () => {
                   </button>
                 </div>
 
-                <Button size="lg" className="w-full" onClick={() => setStep(2)}>
-                  {t('next')} <Arrow className={`w-4 h-4 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`}/>
+                <Button size="lg" type="submit" className="w-full">
+                  {t('createAccount')} <Arrow className={`w-4 h-4 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`}/>
                 </Button>
-              </div>
+
+                {/*<Button type="submit" size="lg" className="flex-1">{t('createAccount')}</Button>*/}
+
+              </data>
             ) : (
-              <form className="space-y-5 animate-in fade-in slide-in-from-right-8" onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
+              <div className="space-y-5 animate-in fade-in slide-in-from-right-8" >
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t('firstName')}</label>
@@ -130,6 +139,17 @@ export const Signup = () => {
                   />
                 </div>
 
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('phone')}</label>
+                  <input
+                    required
+                    value={formData.phone}
+                    onChange={e => setFormData({...formData, phone: e.target.value})}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none"
+                  />
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">{t('password')}</label>
                   <input
@@ -150,10 +170,10 @@ export const Signup = () => {
                 </div>
 
                 <div className="pt-2 flex gap-3">
-                  <Button type="button" variant="ghost" onClick={() => setStep(1)}>{t('back')}</Button>
-                  <Button type="submit" size="lg" className="flex-1">{t('createAccount')}</Button>
+                  <Button type="button" className="flex-1" onClick={() => setStep(1)}>{t('nextAccount')}</Button>
+                  {/*<Button type="submit" size="lg" className="flex-1">{t('createAccount')}</Button>*/}
                 </div>
-              </form>
+              </div>
             )}
 
             <div className="text-center pt-4 border-t border-gray-100">
@@ -161,7 +181,7 @@ export const Signup = () => {
                 {t('yesAccount')} <a href="#login" className="font-medium text-primary hover:text-primaryDark">{t('login')}</a>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       )}
     </>

@@ -25,9 +25,9 @@ export const translations = {
     guest: 'زائر',
     
     // Landing
-    heroTitle: 'أرسل شحنتك ',
-    heroTitleHighlight: 'بأقل تكلفة',
-    heroSubtitle: 'تواصل مع المسافرين الذين لديهم مساحة فارغة. وفر حتى 80٪ من تكاليف الشحن مع تقليل البصمة الكربونية.',
+    heroTitle: 'نرافق طردك... ',
+    heroTitleHighlight: 'نضمن خدمة موثوقة و آمنة من الإرسال إلى الإستلام',
+    heroSubtitle: 'تواصل مع المسافرين الذين لديهم مساحة فارغة. وفر حتى 80٪ من تكاليف الشحن و ساهم في بناء اقتصاد تشاركي و مستدام.',
     heroBadge: 'نطمح لتوصيل أكثر من مليون طرد',
     getQuote: 'احصل على عرض سعر',
     departure: 'الانطلاق',
@@ -85,14 +85,16 @@ export const translations = {
     noAccount: 'ليس لديك حساب؟',
     yesAccount: 'لديك حساب بالفعل؟',
     createAccount: 'إنشاء حساب',
-    howUse: 'كيف تريد استخدام كوكو كوليس؟',
-    wantShip: 'أريد شحن الطرود بسعر رخيص.',
-    wantEarn: 'أريد كسب المال أثناء السفر.',
-    trackShipment: 'أريد تتبع شحنتي',
+    nextAccount: 'المتابعة',
+    howUse: 'كيف تريد استخدام ',
+    wantShip: 'أريد التأكد من عدم فقدان الطرد.',
+    wantEarn: 'أريد نقل الطرد بأمان.',
+    trackShipment: 'أريد استلام الطرد بسهولة و أريحية',
     firstName: 'الاسم الأول',
     lastName: 'اسم العائلة',
     agreeTerms: 'أوافق على الشروط والأحكام',
-    
+    phone: 'رقم الهاتف',
+
     // Dashboard Sender
     activeShipments: 'شحنات نشطة',
     sendParcel: 'أرسل طرداً',

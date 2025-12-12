@@ -40,8 +40,8 @@ export const Landing = () => {
                 <span className="">{t('heroBadge')}</span> 
               </div>
               <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.1] mb-6 drop-shadow-sm">
-                <div className="mb-6" >{t('heroTitle')}</div>
-                <span className="text-pink-500 bg-clip-text bg-gradient-to-r from-primary-400 to-pink-500">{t('heroTitleHighlight')}</span>.
+                <div className="mb-0 text-pink-500 text-6xl" >{t('heroTitle')}</div>
+                <span className="text-white bg-clip-text bg-gradient-to-r from-primary-400 to-pink-500 text-2xl">{t('heroTitleHighlight')}</span>
               </h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
                 {t('heroSubtitle')}

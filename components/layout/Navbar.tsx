@@ -82,9 +82,21 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                   <Button variant="ghost" onClick={() => window.location.hash = '#login'}>{t('login')}</Button>
                   <Button onClick={() => window.location.hash = '#signup'} className="shadow-lg shadow-primary/20">{t('signup')}</Button>
                 </div>
+
+
               </>
             ) : (
               <>
+                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
+                  {user?.avatar ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full"/> : user?.name.charAt(0)}
+                </div>
+                <Button variant="ghost" size="sm" onClick={logout} className="text-gray-400 hover:text-red-500">
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </>
+            )}
+
+            <>
                 {/* Language Switcher */}
                 <div className="relative">
                    <button 
@@ -102,14 +114,13 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                      </div>
                    )}
                 </div>
-                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
+                {/*<div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer" onClick={() => window.location.hash = '#profile'}>
                   {user?.avatar ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover rounded-full"/> : user?.name.charAt(0)}
                 </div>
                 <Button variant="ghost" size="sm" onClick={logout} className="text-gray-400 hover:text-red-500">
                   <LogOut className="h-5 w-5" />
-                </Button>
+                </Button>*/}
               </>
-            )}
 
 
           </div>
