@@ -63,7 +63,7 @@ const RealMap: React.FC<RealMapProps> = ({ markers, onLocationSelect, onGeocodeR
       maxZoom={16}
       maxBounds={guelmaBounds}
     >
-      <GeocoderControl apiKey={apiKey} onResult={onGeocodeResult} bbox={guelmaBounds} />
+
       {markers?.filter(marker => marker.lat && marker.lng).map((marker, index) => (
         <Marker key={index} longitude={marker.lng!} latitude={marker.lat!} anchor="bottom">
           <MapPin style={{ color: marker.color }} fill={marker.color} stroke="white" strokeWidth={2} size={32} />
