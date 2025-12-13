@@ -118,17 +118,7 @@ export const assignTransporter = async (parcelId: string, transporterId: string)
   return data as Parcel;
 };
 
-export const assignTripToParcel = async (parcelId: string, tripId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('parcels')
-    .update({ trip_id: tripId, status: 'MATCHED' })
-    .eq('id', parcelId);
 
-  if (error) {
-    console.error('Error assigning trip to parcel:', error);
-    throw error;
-  }
-};
 
 export const fetchParcelByTrackingCode = async (trackingCode: string): Promise<Parcel | null> => {
   const { data, error } = await supabase

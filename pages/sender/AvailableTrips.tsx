@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { useNotification } from '../../context/NotificationContext';
 import { Button } from '../../components/ui/Button';
 import { Trip, Parcel, ParcelStatus } from '../../types';
-import { ArrowRight, ArrowLeft, Users, MapPin, Calendar, Plus } from 'lucide-react';
-import { fetchTrips, assignTripToParcel } from '../../services/data';
+import { ArrowRight, ArrowLeft, MapPin, Calendar, Plus } from 'lucide-react';
+import { fetchTrips, assignTransporter } from '../../services/data';
 import { BackButton } from '../../components/ui/BackButton';
 import { Modal } from '../../components/ui/Modal';
 
 export const AvailableTrips = () => {
   const { t, dir } = useLanguage();
-  const { user, parcels } = useApp();
+  const { user, parcels, refreshData, role } = useApp();
+  const { addNotification } = useNotification();
   const [trips, setTrips] = useState<Trip[]>([]);
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
@@ -27,16 +29,22 @@ export const AvailableTrips = () => {
   }
   
   const handleAssignParcel = async (parcelId: string) => {
-    if(!selectedTrip) return;
-    await assignTripToParcel(parcelId, selectedTrip.id);
-    setIsAssignModalOpen(false);
+    if(!selectedTrip || !user) return;
+    try {
+      await assignTransporter(parcelId, selectedTrip.transporter_id);
+      addNotification('Parcel assigned successfully!', 'success');
+      await refreshData(role, user.id);
+      setIsAssignModalOpen(false);
+    } catch (error) {
+      addNotification('Failed to assign parcel.', 'error');
+    }
   }
 
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 p-4 lg:p-8" dir={dir}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <BackButton />
         <div className="mt-8 flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">{t('availableTravelers')}</h1>

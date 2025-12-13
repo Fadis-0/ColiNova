@@ -46,7 +46,7 @@ export interface Parcel {
 
 export interface Trip {
   id: string;
-  transporterId: string;
+  transporter_id: string;
   origin: Coordinates;
   destination: Coordinates;
   date: string;
