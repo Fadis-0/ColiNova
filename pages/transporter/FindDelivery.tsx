@@ -77,22 +77,20 @@ export const FindDelivery = () => {
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto" dir={dir}>
+    <div className="p-8  mx-auto" dir={dir}>
     
-      <BackButton />
-
-      <div className="flex-grow py-24 overflow-hidden">
+      <div className="max-w-6xl mx-auto mt-4">
+        <BackButton />
+      </div>
+      <div className="flex-grow  overflow-hidden">
         {isSearching ? (
-          <div className="flex flex-col items-center justify-center h-full">
+          <div className="py-24 mx-auto flex flex-col items-center justify-center h-full">
             <ParcelSearch onSearch={handleSearch} />
           </div>
         ) : ( 
-          <div className="h-full flex flex-col md:flex-row">
-            <div className={`w-full md:w-[450px] bg-white ${dir === 'rtl' ? 'border-l' : 'border-r'} border-gray-200 flex flex-col z-10 shadow-xl h-full`}>
-              <div className="p-5 border-b border-gray-200 space-y-4 bg-white z-20">
-                <Button onClick={() => setIsSearching(true)}>{t('back')}</Button>
-                <h1 className="text-xl font-bold text-gray-900">{filteredParcels.length} {t('availableRequests')}</h1>
-              </div>
+          <div className="h-full max-w-7xl mt-4 mx-auto flex flex-col md:flex-row">
+            <div className={`w-full md:w-[450px] bg-white ${dir === 'rtl' ? 'border-l' : 'border-r'} border-gray-200 flex flex-col z-10 h-full`}>
+              
               <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
                 {filteredParcels.map(p => (
                   <div 
@@ -132,7 +130,7 @@ export const FindDelivery = () => {
 
               </div>
             </div>
-            <div className="flex-1 relative bg-gray-200 hidden md:block">
+            <div className="flex-1 relative rounded-2xl border-2 h-[540px] border-gray-300 shadow-sm overflow-hidden bg-gray-200 hidden md:block">
               <RealMap>
                 {filteredParcels.filter(p => p.origin && p.origin.lat != null && p.origin.lng != null).map(p => (
                   <Marker key={p.id} longitude={p.origin.lng!} latitude={p.origin.lat!} anchor="bottom">
