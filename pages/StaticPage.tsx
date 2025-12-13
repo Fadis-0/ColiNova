@@ -21,7 +21,6 @@ export const StaticPage: React.FC<StaticPageProps> = ({ title, subtitle, childre
          </div>
       </div>
 
-      <Footer />
     </div>
   );
 };

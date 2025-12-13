@@ -56,10 +56,17 @@ export const FindDelivery = () => {
 
 
   const handleConfirmTrip = async () => {
-    if (!selectedParcel || !user) return;
+    console.log('handleConfirmTrip called');
+    if (!selectedParcel || !user) {
+      console.log('No parcel or user selected');
+      return;
+    }
     try {
+      console.log('Assigning transporter...');
       await assignTransporter(selectedParcel.id, user.id);
+      console.log('Transporter assigned. Refreshing data...');
       await refreshData(role, user.id);
+      console.log('Data refreshed. Closing modal.');
       setSelectedParcel(null);
     } catch (error) {
       console.error("Failed to confirm trip:", error);

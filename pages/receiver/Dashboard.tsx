@@ -90,8 +90,8 @@ export const ReceiverDashboard = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12" dir={dir}>
-      <BackButton />
-      <div className="text-center mb-12">
+   
+      <div className="text-center mb-12 mt-16">
         <h1 className="text-3xl font-bold text-gray-900">{t('trackDelivery')}</h1>
         <p className="text-gray-500 mt-2">{t('trackInstruction')}</p>
       </div>

@@ -101,14 +101,31 @@ export const deleteTrip = async (tripId: number): Promise<void> => {
   }
 };
 
-export const assignTransporter = async (parcelId: string, transporterId: string): Promise<void> => {
-  const { error } = await supabase
+export const assignTransporter = async (parcelId: string, transporterId: string): Promise<Parcel> => {
+  console.log('Assigning transporter in DB:', { parcelId, transporterId });
+  const { data, error } = await supabase
     .from('parcels')
     .update({ transporter_id: transporterId, status: 'MATCHED' })
-    .eq('id', parcelId);
+    .eq('id', parcelId)
+    .select()
+    .single();
 
   if (error) {
     console.error('Error assigning transporter:', error);
+    throw error;
+  }
+  console.log('Transporter assigned successfully in DB', data);
+  return data as Parcel;
+};
+
+export const assignTripToParcel = async (parcelId: string, tripId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('parcels')
+    .update({ trip_id: tripId, status: 'MATCHED' })
+    .eq('id', parcelId);
+
+  if (error) {
+    console.error('Error assigning trip to parcel:', error);
     throw error;
   }
 };

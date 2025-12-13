@@ -97,13 +97,21 @@ export const translations = {
     agreeTerms: 'أوافق على الشروط والأحكام',
     phone: 'رقم الهاتف',
 
+    noPendingParcels: 'ليس لديك طرود معلقة لتعيينها.',
+
+    
+
     // Dashboard Sender
+
     activeShipments: 'شحنات نشطة',
+
     sendParcel: 'أرسل طرداً',
+
     quickEstimate: 'تقدير سريع',
+
     recentActivity: 'النشاط الأخير',
-    noShipments: 'لا توجد شحنات نشطة',
-    createRequest: 'إنشاء طلب',
+
+    noShipments: 'لا توجد شحنات نشطة',    createRequest: 'إنشاء طلب',
     from: 'من',
     to: 'إلى',
     liveMap: 'الخريطة المباشرة',
@@ -355,6 +363,7 @@ export const translations = {
         firstName: 'First Name',
         lastName: 'Last Name',
         agreeTerms: 'I agree to the Terms',
+        noPendingParcels: 'You have no pending parcels to assign.',
         
         // Dashboard Sender
         activeShipments: 'Active Shipments',
@@ -607,6 +616,7 @@ export const translations = {
         firstName: 'Prénom',
         lastName: 'Nom',
         agreeTerms: 'J\'accepte les conditions',
+        noPendingParcels: 'Vous n\'avez aucun colis en attente à assigner.',
         
         // Dashboard Sender
         activeShipments: 'Expéditions actives',

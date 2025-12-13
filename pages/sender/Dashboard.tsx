@@ -232,7 +232,6 @@ export const SenderDashboard = () => {
         )}
       </Modal>
 
-      <Footer />
 
     </div>
   );
