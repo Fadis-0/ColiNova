@@ -38,6 +38,9 @@ export const translations = {
     failedToSwitchRole: 'فشل في تبديل الدور.',
     failedToRefreshData: 'فشل في تحديث البيانات.',
     failedToCreateParcel: 'فشل في إنشاء الطرد.',
+    assignParcelToTrip: 'إسناد طرد إلى رحلة',
+    parcelAssignedSuccess: 'تم إسناد الطرد بنجاح!',
+    failedToAssignParcel: 'فشل في إسناد الطرد.',
     
     // Roles
     sender: 'مُرسل',
@@ -376,6 +379,9 @@ export const translations = {
     
         
         failedToCreateParcel: 'Failed to create parcel.',
+    assignParcelToTrip: 'Assign Parcel to Trip',
+    parcelAssignedSuccess: 'Parcel assigned successfully!',
+    failedToAssignParcel: 'Failed to assign parcel.',
         
     
         
@@ -667,6 +673,9 @@ export const translations = {
     failedToSwitchRole: 'Échec du changement de rôle.',
     failedToRefreshData: 'Échec de l\'actualisation des données.',
     failedToCreateParcel: 'Échec de la création du colis.',
+    assignParcelToTrip: 'Attribuer un colis à un voyage',
+    parcelAssignedSuccess: 'Colis attribué avec succès !',
+    failedToAssignParcel: 'Échec de l\'attribution du colis.',
         
         // Roles
         sender: 'Expéditeur',

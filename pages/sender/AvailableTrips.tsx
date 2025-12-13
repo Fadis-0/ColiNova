@@ -32,11 +32,10 @@ export const AvailableTrips = () => {
     if(!selectedTrip || !user) return;
     try {
       await assignTransporter(parcelId, selectedTrip.transporter_id);
-      addNotification('Parcel assigned successfully!', 'success');
+      addNotification(t('parcelAssignedSuccess'), 'success');
       await refreshData(role, user.id);
-      setIsAssignModalOpen(false);
     } catch (error) {
-      addNotification('Failed to assign parcel.', 'error');
+      addNotification(t('failedToAssignParcel'), 'error');
     }
   }
 
@@ -90,7 +89,7 @@ export const AvailableTrips = () => {
           ))}
         </div>
       </div>
-      <Modal isOpen={isAssignModalOpen} onClose={() => setIsAssignModalOpen(false)} title="Assign Parcel to Trip">
+      <Modal isOpen={isAssignModalOpen} onClose={() => setIsAssignModalOpen(false)} title={t('assignParcelToTrip')}>
         <div className="space-y-4">
             {senderParcels.map(p => (
                 <div key={p.id} className="p-4 border rounded-lg flex justify-between items-center">
