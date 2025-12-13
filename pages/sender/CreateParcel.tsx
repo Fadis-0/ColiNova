@@ -9,10 +9,12 @@ import { MapboxglGeocodingEvent } from '@maplibre/maplibre-gl-geocoder/dist/type
 import { Button } from '../../components/ui/Button';
 import { ArrowLeft, ArrowRight, X, Loader2, Camera, Check } from 'lucide-react';
 import { BackButton } from '../../components/ui/BackButton';
+import { useNotification } from '../../context/NotificationContext';
 
 export const CreateParcel = () => {
   const { addParcel } = useApp();
   const { t, dir } = useLanguage();
+  const { addNotification } = useNotification();
   const [step, setStep] = useState(1);
   const [isUploading, setIsUploading] = useState(false);
   const [route, setRoute] = useState(null);
@@ -78,7 +80,7 @@ export const CreateParcel = () => {
         setFormData(prev => ({ ...prev, images: [...prev.images, ...newImageUrls] }));
       } catch (error) {
         console.error("Failed to upload images", error);
-        // You might want to show an error message to the user here
+        addNotification(t('errorUploadingImage'), 'error');
       } finally {
         setIsUploading(false);
       }
@@ -148,11 +150,11 @@ export const CreateParcel = () => {
   const handleSubmit = async () => {
     // --- Form Validation ---
     if (!formData.title || !formData.weight_kg || !formData.delivery_date || !formData.size) {
-      alert('Please fill all the details in Step 1.');
+      addNotification(t('errorFillAllDetails'), 'warning');
       return;
     }
     if (!formData.origin.lat || !formData.destination.lat) {
-      alert('Please set an origin and a destination on the map in Step 2.');
+      addNotification(t('errorSetOriginDestination'), 'warning');
       return;
     }
     // --- End Validation ---
@@ -165,9 +167,10 @@ export const CreateParcel = () => {
         origin: { ...formData.origin, label: formData.origin.label || 'Custom Origin' },
         destination: { ...formData.destination, label: formData.destination.label || 'Custom Dest' },
       });
+      addNotification(t('parcelCreatedSuccess'), 'success');
       window.location.hash = '#dashboard';
     } catch (error: any) {
-      alert('Error creating parcel: ' + error.message);
+      addNotification(t('errorCreatingParcel') + ': ' + error.message, 'error');
     } finally {
       setIsSubmitting(false);
     }

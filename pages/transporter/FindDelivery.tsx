@@ -11,10 +11,12 @@ import { ParcelMarker } from '../../components/ui/ParcelMarker';
 import { assignTransporter, updateParcelStatus } from '../../services/data';
 import { ParcelSearch } from '../../components/ui/ParcelSearch';
 import { BackButton } from '../../components/ui/BackButton';
+import { useNotification } from '../../context/NotificationContext';
 
 export const FindDelivery = () => {
   const { parcels, refreshData, role, user } = useApp();
   const { t, dir } = useLanguage();
+  const { addNotification } = useNotification();
   const [selectedParcel, setSelectedParcel] = useState<Parcel | null>(null);
   const [routeForModal, setRouteForModal] = useState(null);
   const [filteredParcels, setFilteredParcels] = useState<Parcel[]>([]);
@@ -56,21 +58,15 @@ export const FindDelivery = () => {
 
 
   const handleConfirmTrip = async () => {
-    console.log('handleConfirmTrip called');
-    if (!selectedParcel || !user) {
-      console.log('No parcel or user selected');
-      return;
-    }
+    if (!selectedParcel || !user) return;
     try {
-      console.log('Assigning transporter...');
       await assignTransporter(selectedParcel.id, user.id);
-      console.log('Transporter assigned. Refreshing data...');
       await refreshData(role, user.id);
-      console.log('Data refreshed. Closing modal.');
       setSelectedParcel(null);
+      addNotification(t('tripConfirmed'), 'success');
     } catch (error) {
       console.error("Failed to confirm trip:", error);
-      alert("Error: Could not confirm trip.");
+      addNotification(t('errorConfirmingTrip'), 'error');
     }
   };
 

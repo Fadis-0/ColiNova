@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { NotificationProvider } from './context/NotificationContext';
 import { Navbar } from './components/layout/Navbar';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
@@ -119,10 +120,12 @@ const MainRouter = () => {
 const App = () => {
   return (
     <LanguageProvider>
-      <AppProvider>
-        <Navbar />
-        <MainRouter />
-      </AppProvider>
+      <NotificationProvider>
+        <AppProvider>
+          <Navbar />
+          <MainRouter />
+        </AppProvider>
+      </NotificationProvider>
     </LanguageProvider>
   );
 };

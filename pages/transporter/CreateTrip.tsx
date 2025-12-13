@@ -5,10 +5,12 @@ import { Button } from '../../components/ui/Button';
 import { createTrip } from '../../services/data';
 import { BackButton } from '../../components/ui/BackButton';
 import { CitySearch } from '../../components/ui/CitySearch';
+import { useNotification } from '../../context/NotificationContext';
 
 export const CreateTrip = ({ onClose, onTripCreated }) => {
   const { user, refreshData, role } = useApp();
   const { t } = useLanguage();
+  const { addNotification } = useNotification();
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [departureDate, setDepartureDate] = useState('');
@@ -18,16 +20,6 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting trip with the following data:');
-    console.log({
-      transporter_id: user.id,
-      origin: { label: origin },
-      destination: { label: destination },
-      departure_date: departureDate,
-      arrival_date: arrivalDate,
-      capacity,
-      price,
-    });
     if (!user) return;
     try {
       await createTrip({
@@ -40,16 +32,17 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
         price,
       });
       await onTripCreated();
+      addNotification(t('tripCreated'), 'success');
       onClose();
     } catch (error) {
       console.error('Failed to create trip:', error);
-      alert('Error: Could not create trip.');
+      addNotification(t('errorCreatingTrip'), 'error');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <BackButton />
+  
       <h2 className="text-2xl font-bold">{t('publishTrip')}</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('origin')}</label>

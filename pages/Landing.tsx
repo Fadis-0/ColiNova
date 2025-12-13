@@ -48,11 +48,9 @@ export const Landing = () => {
               </p>
               
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                 <Button size="lg" className="w-full sm:w-auto" onClick={() => window.location.hash = '#create-parcel'}>
-                   {t('sendParcel')} <Arrow className={`h-5 w-5 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`} />
-                 </Button>
-                 <Button size="lg" variant="secondary" className="w-full sm:w-auto" onClick={() => window.location.hash = '#dashboard'}>
-                   {t('iamTraveler')} <Truck className={`h-5 w-5 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`} />
+                 
+                 <Button size="lg" variant="secondary" className="w-full sm:w-auto" onClick={() => window.location.hash = '#login'}>
+                   تسجيل الدخول <Arrow className={`h-5 w-5 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`} />
                  </Button>
               </div>
             </div>

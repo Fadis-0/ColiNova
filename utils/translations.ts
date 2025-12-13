@@ -19,6 +19,25 @@ export const translations = {
     delete: 'حذف',
     home: 'الرئيسية',
     resetFilters: 'إعادة تعيين',
+    avatarUpdated: 'تم تحديث الصورة الرمزية بنجاح!',
+    errorNoImageSelected: 'يجب عليك تحديد صورة لتحميلها.',
+    tripConfirmed: 'تم تأكيد الرحلة بنجاح!',
+    errorConfirmingTrip: 'خطأ: تعذر تأكيد الرحلة.',
+    tripCreated: 'تم إنشاء الرحلة بنجاح!',
+    errorCreatingTrip: 'خطأ: تعذر إنشاء الرحلة.',
+    errorUploadingImage: 'خطأ في تحميل الصور.',
+    errorFillAllDetails: 'يرجى ملء جميع التفاصيل في الخطوة 1.',
+    errorSetOriginDestination: 'يرجى تعيين نقطة انطلاق ووجهة على الخريطة في الخطوة 2.',
+    parcelCreatedSuccess: 'تم إنشاء الطرد بنجاح!',
+    errorCreatingParcel: 'خطأ في إنشاء الطرد',
+    loginSuccess: 'تم تسجيل الدخول بنجاح!',
+    registerSuccess: 'تم التسجيل بنجاح!',
+    logoutSuccess: 'تم تسجيل الخروج بنجاح!',
+    switchedTo: 'تم التبديل إلى دور',
+    role: 'دور',
+    failedToSwitchRole: 'فشل في تبديل الدور.',
+    failedToRefreshData: 'فشل في تحديث البيانات.',
+    failedToCreateParcel: 'فشل في إنشاء الطرد.',
     
     // Roles
     sender: 'مُرسل',
@@ -284,15 +303,103 @@ export const translations = {
         
     
         
-    // Roles
+        avatarUpdated: 'Avatar updated successfully!',
         
-    sender: 'Sender',
+    
         
-    transporter: 'Traveler',
+        errorNoImageSelected: 'You must select an image to upload.',
         
-    receiver: 'Receiver',
+    
         
-    guest: 'Guest',        
+        tripConfirmed: 'Trip confirmed successfully!',
+        
+    
+        
+        errorConfirmingTrip: 'Error: Could not confirm trip.',
+        
+    
+        
+        tripCreated: 'Trip created successfully!',
+        
+    
+        
+        errorCreatingTrip: 'Error: Could not create trip.',
+        
+    
+        
+        errorUploadingImage: 'Error uploading images.',
+        
+    
+        
+        errorFillAllDetails: 'Please fill all the details in Step 1.',
+        
+    
+        
+        errorSetOriginDestination: 'Please set an origin and a destination on the map in Step 2.',
+        
+    
+        
+        parcelCreatedSuccess: 'Parcel created successfully!',
+        
+    
+        
+        errorCreatingParcel: 'Error creating parcel',
+        
+    
+        
+        loginSuccess: 'Logged in successfully!',
+        
+    
+        
+        registerSuccess: 'Registered successfully!',
+        
+    
+        
+        logoutSuccess: 'Logged out successfully!',
+        
+    
+        
+        switchedTo: 'Switched to',
+        
+    
+        
+        role: 'role',
+        
+    
+        
+        failedToSwitchRole: 'Failed to switch role.',
+        
+    
+        
+        failedToRefreshData: 'Failed to refresh data.',
+        
+    
+        
+        failedToCreateParcel: 'Failed to create parcel.',
+        
+    
+        
+        
+        
+    
+        
+        // Roles
+        
+    
+        
+        sender: 'Sender',
+        
+    
+        
+        transporter: 'Traveler',
+        
+    
+        
+        receiver: 'Receiver',
+        
+    
+        
+        guest: 'Guest',        
         // Landing
         heroTitle: 'Send it ',
         heroTitleHighlight: 'cheaper',
@@ -541,6 +648,25 @@ export const translations = {
         delete: 'Supprimer',
         home: 'Acceuil',
         resetFilters: 'Réinitialiser les filtres',
+    avatarUpdated: 'Avatar mis à jour avec succès !',
+    errorNoImageSelected: 'Vous devez sélectionner une image à télécharger.',
+    tripConfirmed: 'Voyage confirmé avec succès !',
+    errorConfirmingTrip: 'Erreur : Impossible de confirmer le voyage.',
+    tripCreated: 'Voyage créé avec succès !',
+    errorCreatingTrip: 'Erreur : Impossible de créer le voyage.',
+    errorUploadingImage: 'Erreur lors du téléchargement des images.',
+    errorFillAllDetails: 'Veuillez remplir tous les détails à l\'étape 1.',
+    errorSetOriginDestination: 'Veuillez définir une origine et une destination sur la carte à l\'étape 2.',
+    parcelCreatedSuccess: 'Colis créé avec succès !',
+    errorCreatingParcel: 'Erreur lors de la création du colis',
+    loginSuccess: 'Connecté avec succès !',
+    registerSuccess: 'Inscrit avec succès !',
+    logoutSuccess: 'Déconnecté avec succès !',
+    switchedTo: 'Passé au rôle de',
+    role: 'rôle',
+    failedToSwitchRole: 'Échec du changement de rôle.',
+    failedToRefreshData: 'Échec de l\'actualisation des données.',
+    failedToCreateParcel: 'Échec de la création du colis.',
         
         // Roles
         sender: 'Expéditeur',

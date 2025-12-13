@@ -3,6 +3,8 @@ import { User, UserRole, Parcel, Trip } from '../types';
 import { login as supabaseLogin, signup as supabaseSignup, signOut, getSession, getProfile, updateProfile } from '../services/auth';
 import { supabase } from '../utils/supabase';
 import { fetchParcels, fetchTrips, createParcel } from '../services/data';
+import { useNotification } from './NotificationContext';
+import { useLanguage } from './LanguageContext';
 import * as api from '../services/mockApi';
 
 
@@ -29,6 +31,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [parcels, setParcels] = useState<Parcel[]>([]);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { addNotification } = useNotification();
+  const { t } = useLanguage();
 
   const login = async (email: string, password: string, selectedRole: UserRole) => {
     setIsLoading(true);
@@ -44,7 +48,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
+        addNotification(t('loginSuccess'), 'success');
       }
+    } catch (error) {
+      addNotification((error as Error).message, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +67,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
+        addNotification(t('registerSuccess'), 'success');
       }
+    } catch (error) {
+      addNotification((error as Error).message, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +82,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRole(UserRole.GUEST);
     setParcels([]);
     window.location.hash = '#';
+    addNotification(t('logoutSuccess'), 'info');
   };
 
   const switchRole = async (newRole: UserRole) => {
@@ -83,6 +94,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setUser(updatedUser);
       setRole(newRole);
       await refreshData(newRole, user.id);
+      addNotification(`${t('switchedTo')} ${newRole} ${t('role')}.`, 'info');
+    } catch (error) {
+      addNotification(t('failedToSwitchRole'), 'error');
     } finally {
       setIsLoading(false);
     }
@@ -104,6 +118,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const t = await fetchTrips();
         setTrips(t);
     }
+    catch (error) {
+      addNotification(t('failedToRefreshData'), 'error');
+    }
     finally {
         setIsLoading(false);
     }
@@ -111,8 +128,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const addParcel = async (p: Partial<Parcel>) => {
     if (!user) throw new Error("User not authenticated");
-    const newP = await createParcel(p, user.id);
-    setParcels(prev => [newP, ...prev]);
+    try {
+      const newP = await createParcel(p, user.id);
+      setParcels(prev => [newP, ...prev]);
+      addNotification(t('parcelCreatedSuccess'), 'success');
+    } catch (error) {
+      addNotification(t('failedToCreateParcel'), 'error');
+    }
   };
 
   useEffect(() => {

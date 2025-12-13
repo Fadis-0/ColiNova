@@ -3,9 +3,13 @@ import { useApp } from '../../context/AppContext';
 import { supabase } from '../../utils/supabase';
 import { Button } from './Button';
 import { Camera } from 'lucide-react';
+import { useNotification } from '../../context/NotificationContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Avatar = () => {
   const { user, updateUserAvatar } = useApp();
+  const { addNotification } = useNotification();
+  const { t } = useLanguage();
   const [uploading, setUploading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -20,9 +24,8 @@ export const Avatar = () => {
   const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);
-      console.log('Uploading avatar...');
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.');
+        throw new Error(t('errorNoImageSelected'));
       }
 
       const file = event.target.files[0];
@@ -30,43 +33,34 @@ export const Avatar = () => {
       const fileName = `${user!.id}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      console.log('Uploading file to Supabase storage...');
       let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file, { upsert: true });
 
       if (uploadError) {
-        console.error('Error uploading file:', uploadError);
         throw uploadError;
       }
-      console.log('File uploaded successfully.');
 
-      console.log('Getting public URL...');
       const { data, error: urlError } = supabase.storage.from('avatars').getPublicUrl(filePath);
 
       if (urlError) {
-        console.error('Error getting public URL:', urlError);
         throw urlError;
       }
-      console.log('Public URL:', data.publicUrl);
       
       const newAvatarUrl = data.publicUrl;
 
-      console.log('Updating profile with new avatar URL...');
       let { error: updateError } = await supabase.from('profiles').update({ avatar_url: newAvatarUrl }).eq('id', user!.id);
       
       if (updateError) {
-        console.error('Error updating profile:', updateError);
         throw updateError;
       }
-      console.log('Profile updated successfully.');
 
       setLoadingImage(true);
       setAvatarUrl(newAvatarUrl);
       updateUserAvatar(newAvatarUrl);
+      addNotification(t('avatarUpdated'), 'success');
     } catch (error) {
-      alert((error as Error).message);
+      addNotification((error as Error).message, 'error');
     } finally {
       setUploading(false);
-      console.log('Upload process finished.');
     }
   };
 
