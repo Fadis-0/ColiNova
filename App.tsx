@@ -18,6 +18,7 @@ import { UserRole } from './types';
 import { StaticPage } from './pages/StaticPage';
 import { FindDelivery } from './pages/transporter/FindDelivery';
 import { MyTrips } from './pages/transporter/MyTrips';
+import { AcceptedParcels } from './pages/transporter/AcceptedParcels';
 
 const MainRouter = () => {
   const { role, isLoading } = useApp();
@@ -92,6 +93,7 @@ const MainRouter = () => {
       if (hash === '#dashboard') return <TransporterDashboard />;
       if (hash === '#find-delivery') return <FindDelivery />;
       if (hash === '#my-trips') return <MyTrips />;
+      if (hash === '#accepted-parcels') return <AcceptedParcels />;
     }
 
     if (role === UserRole.RECEIVER) {

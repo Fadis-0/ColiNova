@@ -52,7 +52,8 @@ export const translations = {
     findDeliveryTitle: 'ابحث عن طرد لتوصيله',
     findDeliverySubtitle: 'تصفح الطرود المتاحة وابحث عن وظيفة التوصيل التالية.',
     myTripsTitle: 'إدارة رحلاتك',
-    myTripsSubtitle: 'هنا يمكنك إدارة رحلاتك المنشورة وعرض سجل التوصيل الخاص بك.',
+    myTripsSubtitle: 'هنا يمكنك إدارة رحلاتك المنشورة الخاص بك.',
+    acceptedParcels: 'الطرود المقبولة',
     
     // Roles
     sender: 'مُرسل',
@@ -132,6 +133,11 @@ export const translations = {
     phone: 'رقم الهاتف',
 
     noPendingParcels: 'ليس لديك طرود معلقة لتعيينها.',
+
+    acceptedParcelsTitle: 'التوصيلات المقبولة',
+    acceptedParcelsSubtitle: 'هنا هي التوصيلات التي قبلتها',
+    noAcceptedDeliveries: 'لا توجد توصيلات مقبولة',
+    noAcceptedDeliveriesSubtitle: 'لم تقبل أي توصيلات بعد.',
 
     
 
@@ -216,8 +222,7 @@ export const translations = {
         co2saved: 'توفير CO2',
         myDeliveries: 'رحلاتي',
         myTrips: 'رحلاتي',
-        myTripsSubtitle: 'إدارة رحلاتك المنشورة وعرض سجل التسليم الخاص بك.',
-        transporterDashboardSubtitle: 'إدارة رحلاتك وتسليماتك.',
+        transporterDashboardSubtitle: 'أنقل بثقة.. و سافر مطمئنا',
         
         // Profile
         verifications: 'التحققات',
@@ -406,6 +411,7 @@ export const translations = {
     findDeliverySubtitle: 'Browse available parcels and find your next delivery job.',
     myTripsTitle: 'Manage Your Trips',
     myTripsSubtitle: 'Here you can manage your published trips and view your delivery history.',
+    acceptedParcels: 'Accepted Parcels',
         
     
         
@@ -502,6 +508,11 @@ export const translations = {
         agreeTerms: 'I agree to the Terms',
         noPendingParcels: 'You have no pending parcels to assign.',
         
+        acceptedParcelsTitle: 'Accepted Deliveries',
+        acceptedParcelsSubtitle: 'Here are the deliveries you have accepted',
+        noAcceptedDeliveries: 'No Accepted Deliveries',
+        noAcceptedDeliveriesSubtitle: 'You have not accepted any deliveries yet.',
+
         // Dashboard Sender
         activeShipments: 'Active Shipments',
         sendParcel: 'Send a Parcel',
@@ -712,6 +723,7 @@ export const translations = {
     findDeliverySubtitle: 'Parcourez les colis disponibles et trouvez votre prochain travail de livraison.',
     myTripsTitle: 'Gérez vos voyages',
     myTripsSubtitle: 'Ici, vous pouvez gérer vos voyages publiés et consulter votre historique de livraison.',
+    acceptedParcels: 'Livraisons Acceptées',
         
         // Roles
         sender: 'Expéditeur',
@@ -788,6 +800,11 @@ export const translations = {
         lastName: 'Nom',
         agreeTerms: 'J\'accepte les conditions',
         noPendingParcels: 'Vous n\'avez aucun colis en attente à assigner.',
+
+        acceptedParcelsTitle: 'Livraisons Acceptées',
+        acceptedParcelsSubtitle: 'Voici les livraisons que vous avez acceptées',
+        noAcceptedDeliveries: 'Aucune Livraison Acceptée',
+        noAcceptedDeliveriesSubtitle: 'Vous n\'avez encore accepté aucune livraison.',
         
         // Dashboard Sender
         activeShipments: 'Expéditions actives',

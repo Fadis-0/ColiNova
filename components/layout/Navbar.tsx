@@ -48,6 +48,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               <div className="flex items-center gap-8 mx-auto">
                 <a href="#dashboard" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('home')}</a>
                 <a href="#find-delivery" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('findDelivery')}</a>
+                <a href="#accepted-parcels" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('acceptedParcels')}</a>
                 <a href="#my-trips" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('myDeliveries')}</a>
               </div>
             )}
