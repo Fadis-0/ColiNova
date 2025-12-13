@@ -10,7 +10,6 @@ export const ParcelSearch = ({ onSearch }) => {
   const [dropoff, setDropoff] = useState('');
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState('');
-  const [price, setPrice] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -19,7 +18,6 @@ export const ParcelSearch = ({ onSearch }) => {
       dropoff,
       size,
       weight: Number(weight),
-      price: Number(price),
     };
     onSearch(searchParams);
   };
@@ -29,7 +27,6 @@ export const ParcelSearch = ({ onSearch }) => {
     setDropoff('');
     setSize('');
     setWeight('');
-    setPrice('');
     onSearch({}); // Call onSearch with empty object to show all parcels
   };
 
@@ -42,10 +39,15 @@ export const ParcelSearch = ({ onSearch }) => {
         <div className="relative mb-4">
           <CitySearch onSelect={setDropoff} placeholder={t('dropoffCity')} value={dropoff} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <input name="size" placeholder={t('size')} className="p-2 border rounded" value={size} onChange={e => setSize(e.target.value)} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <select name="size" className="p-2 border rounded" value={size} onChange={e => setSize(e.target.value)}>
+            <option value="">{t('size')}</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
           <input name="weight" type="number" placeholder={t('weight')} className="p-2 border rounded" value={weight} onChange={e => setWeight(e.target.value)} />
-          <input name="price" type="number" placeholder={t('price')} className="p-2 border rounded" value={price} onChange={e => setPrice(e.target.value)} />
         </div>
         <div className="flex gap-4 mt-4">
           <Button type="submit" className="flex-1" size="lg">

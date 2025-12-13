@@ -5,6 +5,7 @@ import { UserRole } from '../types';
 import { Button } from '../components/ui/Button';
 import { Package, Truck, UserCheck } from 'lucide-react';
 import WelcomeMessage from '../components/ui/WelcomeMessage';
+import { Footer } from '../components/layout/Footer';
 
 export const Login = () => {
   const { login } = useApp();
@@ -89,6 +90,7 @@ export const Login = () => {
           </div>
         </div>
       )}
+      <Footer />
     </>
   );
 };

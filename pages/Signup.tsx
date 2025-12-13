@@ -5,6 +5,7 @@ import { UserRole } from '../types';
 import { Button } from '../components/ui/Button';
 import { Package, Truck, ArrowRight, ArrowLeft, Home } from 'lucide-react';
 import WelcomeMessage from '../components/ui/WelcomeMessage';
+import { Footer } from '../components/layout/Footer';
 
 export const Signup = () => {
   const { register } = useApp();
@@ -184,6 +185,7 @@ export const Signup = () => {
           </form>
         </div>
       )}
+      <Footer />
     </>
   );
 };

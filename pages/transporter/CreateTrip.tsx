@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui/Button';
 import { createTrip } from '../../services/data';
 import { BackButton } from '../../components/ui/BackButton';
+import { CitySearch } from '../../components/ui/CitySearch';
 
 export const CreateTrip = ({ onClose, onTripCreated }) => {
   const { user, refreshData, role } = useApp();
@@ -17,6 +18,16 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Submitting trip with the following data:');
+    console.log({
+      transporter_id: user.id,
+      origin: { label: origin },
+      destination: { label: destination },
+      departure_date: departureDate,
+      arrival_date: arrivalDate,
+      capacity,
+      price,
+    });
     if (!user) return;
     try {
       await createTrip({
@@ -42,21 +53,11 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
       <h2 className="text-2xl font-bold">{t('publishTrip')}</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('origin')}</label>
-        <input
-          type="text"
-          value={origin}
-          onChange={(e) => setOrigin(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-        />
+        <CitySearch onSelect={setOrigin} placeholder={t('origin')} value={origin} />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('destination')}</label>
-        <input
-          type="text"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-        />
+        <CitySearch onSelect={setDestination} placeholder={t('destination')} value={destination} />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('departureDate')}</label>

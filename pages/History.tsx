@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Button } from '../components/ui/Button';
 import { Clock, Package, ArrowRight, ArrowLeft } from 'lucide-react';
 import { BackButton } from '../components/ui/BackButton';
+import { Footer } from '../components/layout/Footer';
 
 export const History = () => {
   const { t, dir } = useLanguage();
@@ -60,6 +61,7 @@ export const History = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

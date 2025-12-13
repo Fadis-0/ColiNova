@@ -4,6 +4,7 @@ import { Bell, Lock, User, CreditCard, LogOut, ChevronRight, ChevronLeft } from 
 import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
 import { BackButton } from '../components/ui/BackButton';
+import { Footer } from '../components/layout/Footer';
 
 export const Settings = () => {
   const { logout } = useApp();
@@ -128,6 +129,7 @@ export const Settings = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

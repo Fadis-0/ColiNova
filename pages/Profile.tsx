@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { User, Mail, Phone, Star, Package, CheckCircle, Clock } from 'lucide-react';
 import { Avatar } from '../components/ui/Avatar';
 import { BackButton } from '../components/ui/BackButton';
+import { Footer } from '../components/layout/Footer';
 
 export const Profile = () => {
   const { user } = useApp();
@@ -98,6 +99,7 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

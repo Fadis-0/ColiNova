@@ -69,12 +69,11 @@ export const FindDelivery = () => {
 
   const handleSearch = (searchParams) => {
     const filtered = availableParcels.filter(p => {
-      const pickupMatch = !searchParams.pickup || p.origin.label.toLowerCase().includes(searchParams.pickup.toLowerCase());
-      const dropoffMatch = !searchParams.dropoff || p.destination.label.toLowerCase().includes(searchParams.dropoff.toLowerCase());
+      const pickupMatch = !searchParams.pickup || searchParams.pickup.split(' ').some(word => p.origin.label.toLowerCase().includes(word.toLowerCase()));
+      const dropoffMatch = !searchParams.dropoff || searchParams.dropoff.split(' ').some(word => p.destination.label.toLowerCase().includes(word.toLowerCase()));
       const sizeMatch = !searchParams.size || p.size.toLowerCase() === searchParams.size.toLowerCase();
       const weightMatch = !searchParams.weight || p.weight_kg <= searchParams.weight;
-      const priceMatch = !searchParams.price || p.price <= searchParams.price;
-      return pickupMatch && dropoffMatch && sizeMatch && weightMatch && priceMatch;
+      return pickupMatch && dropoffMatch && sizeMatch && weightMatch;
     });
     setFilteredParcels(filtered);
   };
