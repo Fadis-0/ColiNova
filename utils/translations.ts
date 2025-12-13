@@ -18,6 +18,7 @@ export const translations = {
     cancel: 'إلغاء',
     delete: 'حذف',
     home: 'الرئيسية',
+    resetFilters: 'إعادة تعيين',
     
     // Roles
     sender: 'مُرسل',
@@ -135,8 +136,8 @@ export const translations = {
     weight: 'الوزن (كجم)',
     proposedPrice: 'السعر المقترح (DZD)',
     whereGoing: 'إلى أين تتجه الشحنة؟',
-    pickupCity: 'مدينة الاستلام',
-    dropoffCity: 'مدينة التسليم',
+    pickupCity: 'مكان الاستلام',
+    dropoffCity: 'مكان التسليم',
     reviewRequest: 'مراجعة الطلب',
     postRequest: 'نشر الطلب',
     parcelPhotos: 'صور الشحنة',
@@ -271,12 +272,19 @@ export const translations = {
         cancel: 'Cancel',
         delete: 'Delete',
         
-        // Roles
-        sender: 'Sender',
-        transporter: 'Traveler',
-        receiver: 'Receiver',
-        guest: 'Guest',
+    resetFilters: 'Reset Filters',
         
+    
+        
+    // Roles
+        
+    sender: 'Sender',
+        
+    transporter: 'Traveler',
+        
+    receiver: 'Receiver',
+        
+    guest: 'Guest',        
         // Landing
         heroTitle: 'Send it ',
         heroTitleHighlight: 'cheaper',
@@ -523,6 +531,7 @@ export const translations = {
         cancel: 'Annuler',
         delete: 'Supprimer',
         home: 'Acceuil',
+        resetFilters: 'Réinitialiser les filtres',
         
         // Roles
         sender: 'Expéditeur',

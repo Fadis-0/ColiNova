@@ -122,7 +122,7 @@ export const FindDelivery = () => {
           ))}
         </div>
       </div>
-      <div className={`relative ${isFullScreenMap ? 'h-full w-full' : 'w-2/3 h-full'}`}>
+      <div className={`relative my-auto ${isFullScreenMap ? 'h-[750px] w-full' : 'w-2/3 h-[750px]'}`}>
         <RealMap>
           {filteredParcels.filter(p => p.origin && p.origin.lat != null && p.origin.lng != null).map(p => (
             <Marker key={p.id} longitude={p.origin.lng!} latitude={p.origin.lat!} anchor="bottom">
