@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
-import { MapPin, ArrowDown, Maximize } from 'lucide-react';
+import { MapPin, ArrowDown, Maximize, Package as PackageIcon } from 'lucide-react';
 import { Parcel, ParcelStatus } from '../../types';
 import RealMap from '../../components/ui/RealMap';
 import { Marker } from 'react-map-gl/maplibre';
@@ -12,6 +12,7 @@ import { assignTransporter, updateParcelStatus } from '../../services/data';
 import { ParcelSearch } from '../../components/ui/ParcelSearch';
 import { BackButton } from '../../components/ui/BackButton';
 import { useNotification } from '../../context/NotificationContext';
+import { EmptyState } from '../../components/ui/EmptyState';
 
 export const FindDelivery = () => {
   const { parcels, refreshData, role, user } = useApp();
@@ -86,45 +87,56 @@ export const FindDelivery = () => {
       <div className={`flex flex-col ${isFullScreenMap ? 'hidden' : 'w-1/3'}`}>
         <div className="p-6 border-b border-gray-200">
           <BackButton />
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('findDelivery')}</h1>
+          <div className="p-8">
+            <h1 className="text-3xl font-bold text-gray-900">{t('findDeliveryTitle')}</h1>
+            <p className="text-lg text-gray-600 mt-2">{t('findDeliverySubtitle')}</p>
+          </div>
           <ParcelSearch onSearch={handleSearch} />
         </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-          {filteredParcels.map(p => (
-            <div 
-              key={p.id}
-              onClick={() => setSelectedParcel(p)}
-              className={`p-4 rounded-lg border cursor-pointer transition-all bg-white relative overflow-hidden group ${
-                selectedParcel?.id === p.id 
-                ? 'border-primary ring-2 ring-primary' 
-                : 'border-gray-200 hover:border-primary/50'
-              }`}
-            >
-              <div className="flex gap-4">
-                <img src={p.images?.[0] || 'https://placehold.co/128x128/e2e8f0/e2e8f0'} alt={p.title} className="w-24 h-24 rounded-md object-cover" />
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-1">{p.title}</h3>
-                  <div className="space-y-1 text-sm text-gray-500">
-                      <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-gray-400" />
-                          <span>{p.origin.label}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                          <ArrowDown className="w-4 h-4 text-gray-400" />
-                          <span>{p.destination.label}</span>
-                      </div>
-                  </div>
-                  <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-sm">
-                      <span className="font-semibold">{p.price} DZD</span>
-                      <span className="text-gray-500">{new Date(p.delivery_date).toLocaleDateString()}</span>
+        <div className="flex-1 overflow-y-auto p-8 space-y-3 bg-gray-50">
+          {filteredParcels.length === 0 ? (
+            <EmptyState
+              icon={<PackageIcon className="w-16 h-16" />}
+              title={t('noAvailableDeliveries')}
+              subtitle={t('noAvailableDeliveriesSubtitle')}
+            />
+          ) : (
+            filteredParcels.map(p => (
+              <div 
+                key={p.id}
+                onClick={() => setSelectedParcel(p)}
+                className={`p-4 rounded-lg border cursor-pointer transition-all bg-white relative overflow-hidden group ${
+                  selectedParcel?.id === p.id 
+                  ? 'border-primary ring-2 ring-primary' 
+                  : 'border-gray-200 hover:border-primary/50'
+                }`}
+              >
+                <div className="flex gap-4">
+                  <img src={p.images?.[0] || 'https://placehold.co/128x128/e2e8f0/e2e8f0'} alt={p.title} className="w-24 h-24 rounded-md object-cover" />
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg mb-1">{p.title}</h3>
+                    <div className="space-y-1 text-sm text-gray-500">
+                        <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-gray-400" />
+                            <span>{p.origin.label}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <ArrowDown className="w-4 h-4 text-gray-400" />
+                            <span>{p.destination.label}</span>
+                        </div>
+                    </div>
+                    <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-sm">
+                        <span className="font-semibold">{p.price} DZD</span>
+                        <span className="text-gray-500">{new Date(p.delivery_date).toLocaleDateString()}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
-      <div className={`relative my-auto ${isFullScreenMap ? 'h-[750px] w-full' : 'w-2/3 h-[750px]'}`}>
+      <div className={`relative my-auto ${isFullScreenMap ? 'h-full w-full' : 'w-2/3 h-full'}`}>
         <RealMap>
           {filteredParcels.filter(p => p.origin && p.origin.lat != null && p.origin.lng != null).map(p => (
             <Marker key={p.id} longitude={p.origin.lng!} latitude={p.origin.lat!} anchor="bottom">

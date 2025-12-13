@@ -31,7 +31,7 @@ export const ParcelSearch = ({ onSearch }) => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-8">
+    <div className="w-full max-w-2xl mx-auto px-8">
       <form onSubmit={handleSearch}>
         <div className="relative mb-4">
           <CitySearch onSelect={setPickup} placeholder={t('pickupCity')} value={pickup} />
@@ -40,7 +40,7 @@ export const ParcelSearch = ({ onSearch }) => {
           <CitySearch onSelect={setDropoff} placeholder={t('dropoffCity')} value={dropoff} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <select name="size" className="p-2 border rounded" value={size} onChange={e => setSize(e.target.value)}>
+          <select name="size" className="bg-white p-2 border rounded" value={size} onChange={e => setSize(e.target.value)}>
             <option value="">{t('size')}</option>
             <option value="S">S</option>
             <option value="M">M</option>
