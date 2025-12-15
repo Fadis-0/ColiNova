@@ -55,7 +55,7 @@ export const Footer = () => {
         </div>
         
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-           <p>© 2024 ColiNova. {t('rights')}</p>
+           <p>© 2025 ColiNova. {t('rights')}</p>
            <div className="flex items-center mt-4 md:mt-0 space-x-8">
               <a href="#" className="hover:text-white transition-colors">{t('privacy')}</a>
               <a href="#" className="hover:text-white transition-colors">{t('terms')}</a>

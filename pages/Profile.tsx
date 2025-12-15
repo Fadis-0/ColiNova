@@ -20,11 +20,11 @@ export const Profile = () => {
           <Avatar />
           <div className="text-center md:text-left">
             <h1 className="text-3xl font-bold text-gray-900">{user?.name}</h1>
-            <p className="text-gray-500">{t('memberSince')} {new Date(user?.created_at).toLocaleDateString()}</p>
+            <p className="text-gray-500 mt-2">{t('memberSince')} {new Date(user?.created_at).toLocaleDateString()}</p>
             <div className="flex items-center justify-center md:justify-start gap-2 mt-2">
               <Star className="text-yellow-400 w-5 h-5 fill-current" />
               <span className="font-bold text-lg">4.9</span>
-              <span className="text-gray-500">(23 reviews)</span>
+              <span className="text-gray-500">{t('reviews')}</span>
             </div>
           </div>
         </div>

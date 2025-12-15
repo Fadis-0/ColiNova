@@ -116,17 +116,17 @@ export const FindDelivery = () => {
                   <div className="flex-1">
                     <h3 className="font-bold text-lg mb-1">{p.title}</h3>
                     <div className="space-y-1 text-sm text-gray-500">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 pt-2">
                             <MapPin className="w-4 h-4 text-gray-400" />
                             <span>{p.origin.label}</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 pt-2">
                             <ArrowDown className="w-4 h-4 text-gray-400" />
                             <span>{p.destination.label}</span>
                         </div>
                     </div>
                     <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-sm">
-                        <span className="font-semibold">{p.price} DZD</span>
+                        <span className="font-semibold">{p.price}</span>
                         <span className="text-gray-500">{new Date(p.delivery_date).toLocaleDateString()}</span>
                     </div>
                   </div>

@@ -30,11 +30,9 @@ export const MyTrips = () => {
   }
 
   const onTripDeleted = async (tripId: string) => {
-    if (window.confirm('Are you sure you want to delete this trip?')) {
-      await deleteTrip(tripId);
-      setUpdateKey(k => k + 1);
-      setSelectedTrip(null);
-    }
+    await deleteTrip(tripId);
+    setUpdateKey(k => k + 1);
+    setSelectedTrip(null);    
   }
 
   return (
@@ -112,28 +110,31 @@ export const MyTrips = () => {
           onTripCreated={onTripCreated}
         />
       </Modal>
-      <Modal isOpen={!!selectedTrip} onClose={() => setSelectedTrip(null)} title="Trip Details">
+      <Modal isOpen={!!selectedTrip} onClose={() => setSelectedTrip(null)} title="تفاصيل الرحلة">
         {selectedTrip && (
           <div className="space-y-4">
             <div className="p-4 bg-gray-50 rounded-lg">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-xl">{selectedTrip.origin.label} → {selectedTrip.destination.label}</p>
+                <p className="font-bold text-lg">
+                  <div><span className="text-sm font-normal">من: </span>{selectedTrip.origin.label}</div>
+                  <div><span className="text-sm font-normal">الى: </span>{selectedTrip.destination.label}</div>
+                </p>
                 <p className="font-bold text-xl">{selectedTrip.price} DZD</p>
               </div>
-              <div className="flex justify-between items-center text-sm text-gray-500 mt-2">
+              <div className="mt-6 flex justify-between items-center text-sm text-gray-500 mt-2">
                 <span>{new Date(selectedTrip.departure_date).toLocaleDateString()} - {new Date(selectedTrip.arrival_date).toLocaleDateString()}</span>
                 <span>{selectedTrip.status}</span>
               </div>
             </div>
             <div className="flex gap-4">
-              <Button className="flex-1" variant="outline"><Edit className="w-4 h-4 mr-2" /> {t('edit')}</Button>
               <Button
                 className="flex-1"
                 variant="danger"
                 onClick={() => onTripDeleted(selectedTrip.id)}
+                className="mt-4 bg-red-500 text-white flex gap-2 flex-1 text-lg"
               >
-                <Trash2 className="w-4 h-4 mr-2" />
-                {t('delete')}
+                <Trash2 className="w-5 h-5" />
+                <span>{t('delete')}</span>
               </Button>
             </div>
           </div>

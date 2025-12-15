@@ -32,8 +32,8 @@ const WelcomeMessage = ({ onFadeOut, title, subtitle }) => {
       className={`welcome-message ${visible ? 'fade-in' : 'fade-out'}`}
     >
       <div>
-        <h1 className="text-6xl font-bold">{t(title)}</h1>
-        <p className="text-3xl">{t(subtitle)}</p>
+        <h1 className="text-5xl font-bold">{t(title)}</h1>
+        <p className="text-3xl mt-4">{t(subtitle)}</p>
       </div>
     </div>
   );

@@ -43,14 +43,14 @@ export const CreateTrip = ({ onClose, onTripCreated }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
   
-      <h2 className="text-2xl font-bold">{t('publishTrip')}</h2>
+      
       <div>
-        <label className="block text-sm font-medium text-gray-700">{t('origin')}</label>
-        <CitySearch onSelect={setOrigin} placeholder={t('origin')} value={origin} />
+        <label className="block text-sm font-medium text-gray-700">{t('originTrip')}</label>
+        <CitySearch onSelect={setOrigin} placeholder={t('originTrip')} value={origin} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">{t('destination')}</label>
-        <CitySearch onSelect={setDestination} placeholder={t('destination')} value={destination} />
+        <label className="block text-sm font-medium text-gray-700">{t('destinationTrip')}</label>
+        <CitySearch onSelect={setDestination} placeholder={t('destinationTrip')} value={destination} />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('departureDate')}</label>

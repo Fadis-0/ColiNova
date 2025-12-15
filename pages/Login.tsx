@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { useLanguage } from '../context/LanguageContext';
 import { UserRole } from '../types';
 import { Button } from '../components/ui/Button';
-import { Package, Truck, UserCheck } from 'lucide-react';
+import { Package, Truck, UserCheck, Home } from 'lucide-react';
 import WelcomeMessage from '../components/ui/WelcomeMessage';
 import { Footer } from '../components/layout/Footer';
 
@@ -29,7 +29,7 @@ export const Login = () => {
     <>
       {showWelcome && <WelcomeMessage onFadeOut={handleFadeOut} title="welcomeLoginTitle" subtitle="welcomeLoginSubtitle" />}
       {showForm && (
-        <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-purple-100 px-4" dir={dir}>
+        <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-4" dir={dir}>
           <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 animate-in fade-in slide-in-from-bottom-4">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900">{t('welcomeLoginTitle')}</h2>
@@ -40,7 +40,7 @@ export const Login = () => {
               {[
                 { id: UserRole.TRANSPORTER, label: t('transporter'), icon: Truck },
                 { id: UserRole.SENDER, label: t('sender'), icon: Package },
-                { id: UserRole.RECEIVER, label: t('receiver'), icon: UserCheck },
+                { id: UserRole.RECEIVER, label: t('receiver'), icon: Home },
               ].map((role) => (
                 <button
                   key={role.id}
