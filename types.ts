@@ -21,6 +21,7 @@ export interface User {
   phone: string;
   role: UserRole;
   avatar?: string;
+  wallet_balance?: number;
 }
 
 export interface Coordinates {

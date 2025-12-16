@@ -17,8 +17,8 @@ export const Payments = () => {
     <div className="p-8 max-w-6xl mx-auto">
       <BackButton />
       <div className="mt-8 mb-6">
-        <h1 className="text-3xl font-bold">{t('payments')}</h1>
-        <p className="text-lg text-gray-600 mt-4">{t('paymentsSubtitle')}</p>
+        <h1 className="text-3xl font-bold">{t('earningsHistory')}</h1>
+        <p className="text-lg text-gray-600 mt-4">{t('earningsHistorySubtitle')}</p>
       </div>
 
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -35,12 +35,12 @@ export const Payments = () => {
                   </div>
                   <div className="mx-4">
                     <p className="font-bold text-lg">{parcel.title}</p>
-                    <p className="text-sm text-gray-500">{new Date(parcel.delivery_date).toLocaleDateString()}</p>
+                    <p className="text-sm text-gray-500">{t('completedOn')} {new Date().toLocaleDateString()}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <span className={`text-sm font-bold uppercase ${isPaid ? 'text-green-500' : 'text-yellow-500'}`}>
-                    {statusText}
+                  <span className="text-lg font-bold text-green-500">
+                    +50 {t('points')}
                   </span>
                 </div>
               </li>

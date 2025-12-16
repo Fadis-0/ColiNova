@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { UserRole } from '../../types';
-import { Package, LogOut, Bell, Menu, X, Globe, ChevronsUpDown } from 'lucide-react';
+import { Package, LogOut, Bell, Menu, X, Globe, ChevronsUpDown, Wallet } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
@@ -110,6 +110,13 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                     </div>
                   )}
                 </div>
+
+                {role !== UserRole.SENDER && (
+                  <a href="#wallet" className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <Wallet className="w-5 h-5 text-gray-500" />
+                    <span className="font-medium text-gray-700">{user?.wallet_balance || 0}</span>
+                  </a>
+                )}
 
                 <a href="#profile" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                   <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer">

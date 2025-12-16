@@ -44,7 +44,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           await updateProfile(userData.id, selectedRole);
           profile.role = selectedRole;
         }
-        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url };
+        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url, wallet_balance: profile.wallet_balance };
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
@@ -63,7 +63,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const userData = await supabaseSignup(name, email, phone, password, selectedRole);
       if (userData?.id) {
         const profile = await getProfile(userData.id);
-        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url };
+        const userWithRole = { ...userData, role: profile.role, name: profile.name, phone: profile.phone, avatar: profile.avatar_url, wallet_balance: profile.wallet_balance };
         setUser(userWithRole);
         setRole(profile.role);
         await refreshData(profile.role, userData.id);
@@ -131,6 +131,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setParcels(p);
         const t = await fetchTrips();
         setTrips(t);
+
+        if (currentRole === UserRole.TRANSPORTER) {
+          const confirmedParcels = p.filter(parcel => parcel.status === 'CONFIRMED' && parcel.transporter_id === userId);
+          const wallet_balance = confirmedParcels.length * 50;
+          setUser(prevUser => prevUser ? { ...prevUser, wallet_balance } : null);
+        } else if (currentRole === UserRole.SENDER) {
+          setUser(prevUser => prevUser ? { ...prevUser, wallet_balance: undefined } : null);
+        }
     }
     catch (error) {
       addNotification(t('failedToRefreshData'), 'error');
@@ -163,6 +171,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             name: profile.name,
             phone: profile.phone,
             avatar: profile.avatar_url,
+            wallet_balance: profile.wallet_balance,
           };
           setUser(userWithRole);
           setRole(profile.role);
@@ -189,6 +198,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               name: profile.name,
               phone: profile.phone,
               avatar: profile.avatar_url,
+              wallet_balance: profile.wallet_balance,
             };
             setUser(userWithRole);
             setRole(profile.role);

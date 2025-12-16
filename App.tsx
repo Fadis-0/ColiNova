@@ -22,6 +22,7 @@ import { FindDelivery } from './pages/transporter/FindDelivery';
 import { MyTrips } from './pages/transporter/MyTrips';
 import { AcceptedParcels } from './pages/transporter/AcceptedParcels';
 import { Payments } from './pages/transporter/Payments';
+import { Wallet } from './pages/Wallet';
 
 const MainRouter = () => {
   const { role, isLoading } = useApp();
@@ -86,6 +87,7 @@ const MainRouter = () => {
     if (hash === '#profile') return <Profile />;
     if (hash === '#settings') return <Settings />;
     if (hash === '#history') return <History />;
+    if (hash === '#wallet') return <Wallet />;
 
     if (role === UserRole.SENDER) {
       if (hash === '#dashboard') return <SenderDashboard />;
