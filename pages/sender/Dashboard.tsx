@@ -60,12 +60,15 @@ export const SenderDashboard = () => {
     <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex flex-col lg:flex-col gap-48" dir={dir}>
       <div className={`flex-1 ${dir === 'rtl' ? 'lg:mr-0' : 'lg:ml-0'} p-4 lg:p-8`}>
         <div className="max-w-5xl mx-auto space-y-8">
+
         
           <div className="mt-4 flex flex-col md:flex-row justify-between items-end gap-6 bg-gradient-to-r from-[#1E1B4B] to-primary rounded-3xl p-8 text-white shadow-xl">
             <div>
-              <h1 className="text-3xl font-bold mb-2">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]} 👋</h1>
-              <p className="text-white/80">{t('activeShipments')}: {activeParcels.length}</p>
+              <h1 className="text-xl font-semibold mb-2">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]} 👋</h1>
+              <h1 className="text-4xl font-bold mb-6">{t('senderDashboardSubtitle')}</h1>
+              <p className="mt-4 text-white/80 text-lg">{t('activeShipments')}: {activeParcels.length}</p>
             </div>
+
             <Button className="bg-pink-500 hover:bg-gray-100 shadow-lg border-0" onClick={() => window.location.hash = '#create-parcel'}>
               <Plus className={`h-5 w-5 ${dir === 'rtl' ? 'ml-2' : 'mr-2'}`} />
               <span className="font-bold text-lg text-white" >{t('sendParcel')}</span>
@@ -113,8 +116,12 @@ export const SenderDashboard = () => {
                                  </div>
                               </div>
                               <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide
-                                 ${parcel?.status === ParcelStatus.PENDING ? 'bg-amber-100 text-amber-700' : ''}
-                                 ${parcel?.status === ParcelStatus.IN_TRANSIT ? 'bg-blue-100 text-blue-700' : ''}
+                                 ${parcel?.status === ParcelStatus.PENDING ? 'bg-amber-100 text-amber-700' : 
+                                 parcel?.status === ParcelStatus.MATCHED ? 'bg-purple-100 text-purple-700' :
+                                 parcel?.status === ParcelStatus.PICKED_UP ? 'bg-pink-100 text-pink-700' : 
+                                 parcel?.status === ParcelStatus.IN_TRANSIT ? 'bg-blue-100 text-blue-700' : 
+                                 parcel?.status === ParcelStatus.DELIVERED ? 'bg-green-100 text-green-700' : 
+                                 parcel?.status === ParcelStatus.CONFIRMED ? 'bg-gray-100 text-slate-700' : ''}
                               `}>
                                  {t(parcel.status.toLowerCase())}
                               </span>
@@ -122,7 +129,16 @@ export const SenderDashboard = () => {
                            
                            <div className="flex items-center gap-2 mb-4">
                               <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
-                                 <div className="h-full bg-primary" style={{width: parcel?.status === ParcelStatus.IN_TRANSIT ? '60%' : '10%'}}></div>
+                                 <div className="h-full bg-purple-400" 
+                                  style={{
+                                    width: 
+                                      parcel?.status === ParcelStatus.PENDING ? '16%' : 
+                                      parcel?.status === ParcelStatus.MATCHED ? '32%' : 
+                                      parcel?.status === ParcelStatus.PICKED_UP ? '48%' : 
+                                      parcel?.status === ParcelStatus.IN_TRANSIT ? '64%' : 
+                                      parcel?.status === ParcelStatus.DELIVERED ? '80%' : 
+                                      parcel?.status === ParcelStatus.CONFIRMED ? '100%' : '' 
+                                  }}></div>
                               </div>
                            </div>
 

@@ -255,6 +255,7 @@ export const translations = {
         myDeliveries: 'رحلاتي',
         myTrips: 'رحلاتي',
         transporterDashboardSubtitle: 'أنقل بثقة.. و سافر مطمئنا',
+        senderDashboardSubtitle: 'أرسل بأمان.. تابع بكل ثقة',
         
         // Profile
         verifications: 'التحققات',
@@ -651,6 +652,7 @@ export const translations = {
         myTrips: 'My Trips',
         myTripsSubtitle: 'Manage your published trips and view your delivery history.',
         transporterDashboardSubtitle: 'Manage your trips and deliveries.',
+        senderDashboardSubtitle: 'Manage and track your parcels.',
         
         // Profile
         verifications: 'Verifications',
@@ -970,6 +972,7 @@ export const translations = {
         myTrips: 'Mes voyages',
         myTripsSubtitle: 'Gérez vos voyages publiés et consultez votre historique de livraison.',
         transporterDashboardSubtitle: 'Gérez vos voyages et livraisons.',
+        senderDashboardSubtitle: 'Gérez et suivez vos parcels.',
         
         reviews: 'Avis',
         memberSince: 'Membre depuis',
