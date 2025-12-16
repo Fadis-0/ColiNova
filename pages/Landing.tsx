@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../components/ui/Button';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../context/LanguageContext';
-import { ArrowRight, ArrowLeft, Box, Truck, ShieldCheck, Leaf, Search, Star, DollarSign, Users, PiggyBank, Globe, Recycle } from 'lucide-react';
+import { ArrowRight, Headset, ArrowLeft, Box, Truck, ShieldCheck, Leaf, Search, Star, DollarSign, Users, PiggyBank, Globe, Recycle } from 'lucide-react';
 import RealMap from '../components/ui/RealMap';
 import { Marker } from 'react-map-gl/maplibre';
 import { ParcelMarker } from '../components/ui/ParcelMarker';
@@ -50,7 +50,7 @@ export const Landing = () => {
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                  
                  <Button size="lg" variant="secondary" className="w-full sm:w-auto" onClick={() => window.location.hash = '#login'}>
-                   تسجيل الدخول <Arrow className={`h-5 w-5 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`} />
+                   تواصل معنا <Headset className={`h-5 w-5 ${dir === 'rtl' ? 'mr-2' : 'ml-2'}`} />
                  </Button>
               </div>
             </div>
