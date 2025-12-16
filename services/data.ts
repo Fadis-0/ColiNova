@@ -22,14 +22,23 @@ export const fetchParcels = async (role: UserRole, userId?: string): Promise<Par
 };
 
 export const fetchTrips = async (): Promise<Trip[]> => {
-  const { data, error } = await supabase.from('trips').select('*').order('departure_date', { ascending: true });
+  const { data, error } = await supabase
+    .from('trips')
+    .select('*, profiles(name, rating)')
+    .order('departure_date', { ascending: true });
 
   if (error) {
     console.error('Error fetching trips:', error);
     throw error;
   }
 
-  return data as Trip[];
+  const trips = data.map(trip => ({
+    ...trip,
+    transporter_name: trip.profiles ? trip.profiles.name : 'Anonymous',
+    rating: trip.profiles ? trip.profiles.rating : 0,
+  }));
+
+  return trips as Trip[];
 };
 
 export const createParcel = async (parcel: Partial<Parcel>, senderId: string): Promise<Parcel> => {

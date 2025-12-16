@@ -58,7 +58,7 @@ export const Avatar = () => {
       updateUserAvatar(newAvatarUrl);
       addNotification(t('avatarUpdated'), 'success');
     } catch (error) {
-      addNotification((error as Error).message, 'error');
+      addNotification(t('errorAvatar') + ': ' + (error as Error).message, 'error');
     } finally {
       setUploading(false);
     }

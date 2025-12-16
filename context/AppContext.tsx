@@ -51,7 +51,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addNotification(t('loginSuccess'), 'success');
       }
     } catch (error) {
-      addNotification((error as Error).message, 'error');
+      addNotification(t('errorLoginWithMessage', { message: (error as Error).message }), 'error');
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +70,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addNotification(t('registerSuccess'), 'success');
       }
     } catch (error) {
-      addNotification((error as Error).message, 'error');
+      addNotification(t('errorRegisterWithMessage', { message: (error as Error).message }), 'error');
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +94,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setUser(updatedUser);
       setRole(newRole);
       await refreshData(newRole, user.id);
-      addNotification(`${t('switchedTo')} ${newRole} ${t('role')}.`, 'info');
+      let roleName = '';
+      switch (newRole) {
+        case UserRole.SENDER:
+          roleName = t('roleSender');
+          break;
+        case UserRole.TRANSPORTER:
+          roleName = t('roleTransporter');
+          break;
+        case UserRole.RECEIVER:
+          roleName = t('roleReceiver');
+          break;
+        default:
+          roleName = newRole;
+      }
+      addNotification(`${t('switchedTo')} ${roleName}.`, 'info');
     } catch (error) {
       addNotification(t('failedToSwitchRole'), 'error');
     } finally {

@@ -35,6 +35,7 @@ export interface Parcel {
   receiverName: string;
   title: string;
   description: string;
+  parcel_content: string;
   weight_kg: number; // kg
   size: 'S' | 'M' | 'L' | 'XL';
   price: number;
@@ -47,10 +48,13 @@ export interface Parcel {
 export interface Trip {
   id: string;
   transporter_id: string;
+  transporter_name?: string;
   origin: Coordinates;
   destination: Coordinates;
   date: string;
   capacity: 'S' | 'M' | 'L' | 'XL';
+  rating?: number;
+  success_rate?: number;
 }
 
 export interface ChatMessage {
