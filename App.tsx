@@ -10,10 +10,12 @@ import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
 import { SenderDashboard } from './pages/sender/Dashboard';
 import { CreateParcel } from './pages/sender/CreateParcel';
+import { MyParcels } from './pages/sender/MyParcels';
 import { AvailableTrips } from './pages/sender/AvailableTrips';
 import { History } from './pages/History';
 import { TransporterDashboard } from './pages/transporter/Dashboard';
 import { ReceiverDashboard } from './pages/receiver/Dashboard';
+import { TrackParcel } from './pages/receiver/TrackParcel';
 import { UserRole } from './types';
 import { StaticPage } from './pages/StaticPage';
 import { FindDelivery } from './pages/transporter/FindDelivery';
@@ -65,6 +67,7 @@ const MainRouter = () => {
 
     // Public Dashboard Access (Receiver Tracking)
     if (hash === '#receiver') return <ReceiverDashboard />;
+    if (hash === '#track-parcel') return <TrackParcel />;
 
     // Home
     if (hash === '' || hash === '#') return <Landing />;
@@ -72,7 +75,7 @@ const MainRouter = () => {
     // Protected Routes Check
     if (role === UserRole.GUEST) {
       // If trying to access protected pages while logged out, redirect to login
-      if (['#dashboard', '#profile', '#settings', '#create-parcel', '#find-delivery', '#my-trips'].includes(hash)) {
+      if (['#dashboard', '#profile', '#settings', '#create-parcel', '#find-delivery', '#my-trips', '#my-parcels'].includes(hash)) {
          window.location.hash = '#login';
          return <Login />;
       }
@@ -87,6 +90,7 @@ const MainRouter = () => {
     if (role === UserRole.SENDER) {
       if (hash === '#dashboard') return <SenderDashboard />;
       if (hash === '#create-parcel') return <CreateParcel />;
+      if (hash === '#my-parcels') return <MyParcels />;
       if (hash === '#available-trips') return <AvailableTrips />;
     }
 
@@ -100,6 +104,7 @@ const MainRouter = () => {
 
     if (role === UserRole.RECEIVER) {
       if (hash === '#dashboard') return <ReceiverDashboard />;
+      if (hash === '#track-parcel') return <TrackParcel />;
     }
 
     // 404 Fallback

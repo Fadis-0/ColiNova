@@ -256,6 +256,12 @@ export const translations = {
         myTrips: 'رحلاتي',
         transporterDashboardSubtitle: 'أنقل بثقة.. و سافر مطمئنا',
         senderDashboardSubtitle: 'أرسل بأمان.. تابع بكل ثقة',
+        receiverDashboardSubtitle: 'نؤمن لك استلام مرن.. يراعي وقتك الثمين',
+        sendParcelSubtitle: 'أنشئ طلبًا جديدًا لإرسال طرد',
+        myParcelsSubtitle: 'اعرض وتتبع طرودك المرسلة',
+        availableTripsSubtitle: 'ابحث عن مسافرين متاحين لتوصيل طردك',
+        trackDeliverySubtitle: 'تتبع حالة طردك',
+        historySubtitle: 'عرض سجل تسليم الطرود الخاص بك',
         
         // Profile
         verifications: 'التحققات',
@@ -653,7 +659,13 @@ export const translations = {
         myTripsSubtitle: 'Manage your published trips and view your delivery history.',
         transporterDashboardSubtitle: 'Manage your trips and deliveries.',
         senderDashboardSubtitle: 'Manage and track your parcels.',
-        
+        receiverDashboardSubtitle: 'Manage your received parcels.',
+        sendParcelSubtitle: 'Create a new request to send a parcel',
+        myParcelsSubtitle: 'View and track your sent parcels',
+        availableTripsSubtitle: 'Find available travelers to deliver your parcel',
+        trackDeliverySubtitle: 'Track the status of your parcel',
+        historySubtitle: 'View your parcel delivery history',
+
         // Profile
         verifications: 'Verifications',
         idVerified: 'ID Verified',
@@ -973,6 +985,12 @@ export const translations = {
         myTripsSubtitle: 'Gérez vos voyages publiés et consultez votre historique de livraison.',
         transporterDashboardSubtitle: 'Gérez vos voyages et livraisons.',
         senderDashboardSubtitle: 'Gérez et suivez vos parcels.',
+        receiverDashboardSubtitle: 'Gérez vos colis reçus.',
+        sendParcelSubtitle: 'Créer une nouvelle demande pour envoyer un colis',
+        myParcelsSubtitle: 'Voir et suivre vos colis envoyés',
+        availableTripsSubtitle: 'Trouver des voyageurs disponibles pour livrer votre colis',
+        trackDeliverySubtitle: 'Suivre le statut de votre colis',
+        historySubtitle: 'Consultez le historique de vos livraisons de colis',
         
         reviews: 'Avis',
         memberSince: 'Membre depuis',
