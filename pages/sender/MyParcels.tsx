@@ -62,19 +62,7 @@ export const MyParcels = () => {
         <div className="max-w-5xl mx-auto space-y-8">
 
         
-          <div className="mt-4 flex flex-col md:flex-row justify-between items-end gap-6 bg-gradient-to-r from-[#1E1B4B] to-primary rounded-3xl p-8 text-white shadow-xl">
-            <div>
-              <h1 className="text-xl font-semibold mb-2">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]} 👋</h1>
-              <h1 className="text-4xl font-bold mb-6">{t('senderDashboardSubtitle')}</h1>
-              <p className="mt-4 text-white/80 text-lg">{t('activeShipments')}: {activeParcels.length}</p>
-            </div>
-
-            <Button className="bg-pink-500 hover:bg-gray-100 shadow-lg border-0" onClick={() => window.location.hash = '#create-parcel'}>
-              <Plus className={`h-5 w-5 ${dir === 'rtl' ? 'ml-2' : 'mr-2'}`} />
-              <span className="font-bold text-lg text-white" >{t('sendParcel')}</span>
-            </Button>
-          </div>
-
+          
           <div className="space-y-8 pt-6">
             <div>
               <div className="flex items-center justify-between mb-4">
