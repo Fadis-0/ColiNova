@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui/Button';
-import { ArrowRight, ArrowLeft, Search, Truck, Package } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Search, Truck, Package, DollarSign } from 'lucide-react';
 import { BackButton } from '../../components/ui/BackButton';
 
 export const TransporterDashboard = () => {
@@ -18,7 +18,7 @@ export const TransporterDashboard = () => {
           <p className="text-xl text-gray-600 mb-6">{t('welcomeLoginTitle')}, {user?.name.split(' ')[0]}!</p>
           <h1 className="text-4xl font-bold text-gray-900 mb-6">{t('transporterDashboardSubtitle')}</h1>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
           <a href="#find-delivery" className="group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-center h-16 w-16 bg-blue-100 text-blue-600 rounded-full mb-6">
               <Search className="w-8 h-8" />
@@ -51,6 +51,18 @@ export const TransporterDashboard = () => {
             <p className="text-gray-600 mb-6">{t('myTripsSubtitle', 'Manage your published trips and view your delivery history.')}</p>
             <div className="flex items-center text-green-600 font-semibold">
               <span>{t('myTrips', 'My Trips')}</span>
+              <Arrow className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+            </div>
+          </a>
+
+          <a href="#payments" className="group block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-center h-16 w-16 bg-purple-100 text-purple-600 rounded-full mb-6">
+              <DollarSign className="w-8 h-8" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('payments')}</h2>
+            <p className="text-gray-600 mb-6">{t('paymentsSubtitle')}</p>
+            <div className="flex items-center text-purple-600 font-semibold">
+              <span>{t('payments')}</span>
               <Arrow className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
             </div>
           </a>

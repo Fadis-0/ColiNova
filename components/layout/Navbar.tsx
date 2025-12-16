@@ -28,7 +28,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm" dir={dir}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-16">
         <div className="flex justify-between h-20">
           <div className="flex items-center cursor-pointer" onClick={() => { window.location.hash = '#'; setIsMobileMenuOpen(false); }}>
             <div className={`bg-primary/10 p-2 rounded-xl ${dir === 'rtl' ? 'ml-2' : 'mr-2'}`}>
@@ -50,6 +50,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
                 <a href="#find-delivery" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('findDelivery')}</a>
                 <a href="#accepted-parcels" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('acceptedParcels')}</a>
                 <a href="#my-trips" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('myDeliveries')}</a>
+                <a href="#payments" className="py-2 px-4 text-md font-medium text-gray-500 hover:text-gray-700">{t('payments')}</a>
               </div>
             )}
 

@@ -19,6 +19,7 @@ import { StaticPage } from './pages/StaticPage';
 import { FindDelivery } from './pages/transporter/FindDelivery';
 import { MyTrips } from './pages/transporter/MyTrips';
 import { AcceptedParcels } from './pages/transporter/AcceptedParcels';
+import { Payments } from './pages/transporter/Payments';
 
 const MainRouter = () => {
   const { role, isLoading } = useApp();
@@ -94,6 +95,7 @@ const MainRouter = () => {
       if (hash === '#find-delivery') return <FindDelivery />;
       if (hash === '#my-trips') return <MyTrips />;
       if (hash === '#accepted-parcels') return <AcceptedParcels />;
+      if (hash === '#payments') return <Payments />;
     }
 
     if (role === UserRole.RECEIVER) {

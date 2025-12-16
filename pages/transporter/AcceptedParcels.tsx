@@ -80,7 +80,7 @@ export const AcceptedParcels = () => {
                   <span className={`px-3 py-1 text-xs font-bold uppercase rounded-full ${
                     parcel.status === 'IN_TRANSIT' ? 'bg-blue-100 text-blue-800' :
                     parcel.status === 'DELIVERED' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>{parcel.status}</span>
+                  }`}>{t(parcel.status.toLowerCase())}</span>
                   <p className="font-bold text-lg">{parcel.price}</p>
                 </div>
                 <div className="mt-4">
@@ -149,23 +149,34 @@ export const AcceptedParcels = () => {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <Button 
-                className="flex-1" 
-                onClick={() => {
-                  const nextStatus = getNextStatus(selectedParcel.status);
-                  if (nextStatus) {
-                    handleStatusChange(selectedParcel.id, nextStatus);
+              {selectedParcel.status === ParcelStatus.DELIVERED ? (
+                <Button 
+                  className="flex-1" 
+                  onClick={() => {
+                    window.location.hash = '#payments';
+                  }}
+                >
+                  {t('checkPayment')}
+                </Button>
+              ) : (
+                <Button 
+                  className="flex-1" 
+                  onClick={() => {
+                    const nextStatus = getNextStatus(selectedParcel.status);
+                    if (nextStatus) {
+                      handleStatusChange(selectedParcel.id, nextStatus);
+                    }
+                  }}
+                  disabled={!getNextStatus(selectedParcel.status)}
+                >
+                  {
+                    getNextStatus(selectedParcel.status) === ParcelStatus.PICKED_UP ? t('markAsPickedUp') :
+                    getNextStatus(selectedParcel.status) === ParcelStatus.IN_TRANSIT ? t('markAsInTransit') :
+                    getNextStatus(selectedParcel.status) === ParcelStatus.DELIVERED ? t('markAsDelivered') :
+                    ''
                   }
-                }}
-                disabled={!getNextStatus(selectedParcel.status)}
-              >
-                {
-                  getNextStatus(selectedParcel.status) === ParcelStatus.PICKED_UP ? t('markAsPickedUp') :
-                  getNextStatus(selectedParcel.status) === ParcelStatus.IN_TRANSIT ? t('markAsInTransit') :
-                  getNextStatus(selectedParcel.status) === ParcelStatus.DELIVERED ? t('markAsDelivered') :
-                  ''
-                }
-              </Button>
+                </Button>
+              )}
             </div>
           </div>
         )}
