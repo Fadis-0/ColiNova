@@ -3,9 +3,10 @@ import { Button } from '../../components/ui/Button';
 import { Search, Package, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import RealMap from '../../components/ui/RealMap';
 import { useLanguage } from '../../context/LanguageContext';
-import { fetchParcelByTrackingCode } from '../../services/data';
+import { fetchParcelByTrackingCode, updateParcelStatus } from '../../services/data';
 import { Parcel, ParcelStatus } from '../../types';
 import { BackButton } from '../../components/ui/BackButton';
+import { useNotification } from '../../context/NotificationContext';
 
 export const ReceiverDashboard = () => {
   const { t, dir } = useLanguage();
@@ -14,6 +15,7 @@ export const ReceiverDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [route, setRoute] = useState(null);
+  const { addNotification } = useNotification();
 
   useEffect(() => {
     const fetchRoute = async () => {
@@ -62,9 +64,22 @@ export const ReceiverDashboard = () => {
       setIsLoading(false);
     }
   };
+
+  const handleConfirmDelivery = async () => {
+    if (!parcel) return;
+    try {
+      await updateParcelStatus(parcel.id, ParcelStatus.CONFIRMED);
+      addNotification(t('statusUpdated'), 'success');
+      const updatedParcel = await fetchParcelByTrackingCode(trackCode);
+      setParcel(updatedParcel);
+    } catch (error) {
+      addNotification(t('statusUpdateError'), 'error');
+    }
+  };
   
   const getStatusIcon = (status: ParcelStatus) => {
     switch (status) {
+      case ParcelStatus.CONFIRMED:
       case ParcelStatus.DELIVERED: return <CheckCircle className="w-5 h-5"/>;
       case ParcelStatus.IN_TRANSIT:
       case ParcelStatus.PICKED_UP:
@@ -78,6 +93,7 @@ export const ReceiverDashboard = () => {
   
   const getStatusColor = (status: ParcelStatus) => {
      switch (status) {
+      case ParcelStatus.CONFIRMED:
       case ParcelStatus.DELIVERED: return 'bg-green-500';
       case ParcelStatus.IN_TRANSIT:
       case ParcelStatus.PICKED_UP: return 'bg-blue-500';
@@ -128,7 +144,7 @@ export const ReceiverDashboard = () => {
                  <h2 className="text-xl font-bold text-gray-900">{parcel.title}</h2>
                  <p className="text-sm text-gray-500">{t('from')} {parcel.origin.label} {t('to')} {parcel.destination.label}</p>
                </div>
-               <span className={`px-3 py-1 ${getStatusColor(parcel.status)}/20 text-blue-800 rounded-full text-sm font-medium`}>{parcel.status}</span>
+               <span className={`px-3 py-1 ${getStatusColor(parcel.status)}/20 text-blue-800 rounded-full text-sm font-medium`}>{t(parcel.status.toLowerCase())}</span>
              </div>
              
              <div className="relative">
@@ -140,26 +156,39 @@ export const ReceiverDashboard = () => {
                         <p className="font-medium text-gray-900">{t('booked')}</p>
                       </div>
                    </div>
-                   <div className={`flex gap-4 ${[ParcelStatus.PICKED_UP, ParcelStatus.IN_TRANSIT, ParcelStatus.DELIVERED].includes(parcel.status) ? '' : 'opacity-50'}`}>
+                   <div className={`flex gap-4 ${[ParcelStatus.PICKED_UP, ParcelStatus.IN_TRANSIT, ParcelStatus.DELIVERED, ParcelStatus.CONFIRMED].includes(parcel.status) ? '' : 'opacity-50'}`}>
                       <div className={`w-8 h-8 rounded-full ${getStatusColor(ParcelStatus.PICKED_UP)} flex items-center justify-center text-white z-10`}>{getStatusIcon(ParcelStatus.PICKED_UP)}</div>
                       <div>
-                        <p className="font-medium text-gray-900">{t('pickedUp')}</p>
+                        <p className="font-medium text-gray-900">{t('picked_up')}</p>
                       </div>
                    </div>
-                   <div className={`flex gap-4 ${[ParcelStatus.IN_TRANSIT, ParcelStatus.DELIVERED].includes(parcel.status) ? '' : 'opacity-50'}`}>
+                   <div className={`flex gap-4 ${[ParcelStatus.IN_TRANSIT, ParcelStatus.DELIVERED, ParcelStatus.CONFIRMED].includes(parcel.status) ? '' : 'opacity-50'}`}>
                       <div className={`w-8 h-8 rounded-full ${getStatusColor(ParcelStatus.IN_TRANSIT)} flex items-center justify-center text-white z-10`}>{getStatusIcon(ParcelStatus.IN_TRANSIT)}</div>
                       <div>
                         <p className="font-medium text-gray-900">{t('onTheWay')}</p>
                       </div>
                    </div>
-                   <div className={`flex gap-4 ${parcel.status === ParcelStatus.DELIVERED ? '' : 'opacity-50'}`}>
+                   <div className={`flex gap-4 ${[ParcelStatus.DELIVERED, ParcelStatus.CONFIRMED].includes(parcel.status) ? '' : 'opacity-50'}`}>
                       <div className={`w-8 h-8 rounded-full ${getStatusColor(ParcelStatus.DELIVERED)} flex items-center justify-center text-white z-10`}>{getStatusIcon(ParcelStatus.DELIVERED)}</div>
                       <div>
                         <p className="font-medium text-gray-900">{t('delivered')}</p>
                       </div>
                    </div>
+                   <div className={`flex gap-4 ${parcel.status === ParcelStatus.CONFIRMED ? '' : 'opacity-50'}`}>
+                      <div className={`w-8 h-8 rounded-full ${getStatusColor(ParcelStatus.CONFIRMED)} flex items-center justify-center text-white z-10`}>{getStatusIcon(ParcelStatus.CONFIRMED)}</div>
+                      <div>
+                        <p className="font-medium text-gray-900">{t('confirmed')}</p>
+                      </div>
+                   </div>
                 </div>
              </div>
+             {parcel.status === ParcelStatus.DELIVERED && (
+              <div className="mt-8">
+                <Button onClick={handleConfirmDelivery} className="w-full">
+                  {t('confirmDelivery')}
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">

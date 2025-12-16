@@ -1,17 +1,17 @@
-
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { BackButton } from '../../components/ui/BackButton';
 import { CheckCircle, Clock, DollarSign } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
+import { ParcelStatus } from '../../types';
 
 export const Payments = () => {
   const { t } = useLanguage();
+  const { parcels, user } = useApp();
 
-  const mockPayments = [
-    { id: '1', amount: 50, status: 'paid', date: '2023-10-26' },
-    { id: '2', amount: 75, status: 'pending', date: '2023-10-28' },
-    { id: '3', amount: 120, status: 'paid', date: '2023-10-25' },
-  ];
+  const transporterParcels = parcels.filter(
+    p => p.transporter_id === user?.id && (p.status === ParcelStatus.DELIVERED || p.status === ParcelStatus.CONFIRMED)
+  );
 
   return (
     <div className="p-8 max-w-6xl mx-auto">
@@ -23,25 +23,29 @@ export const Payments = () => {
 
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <ul className="divide-y divide-gray-200">
-          {mockPayments.map(payment => (
-            <li key={payment.id} className="p-6 flex justify-between items-center">
-              <div className="flex items-center">
-                <div className={`mr-4 ${payment.status === 'paid' ? 'text-green-500' : 'text-yellow-500'}`}>
-                  {payment.status === 'paid' ? <CheckCircle size={24} /> : <Clock size={24} />}
+          {transporterParcels.map(parcel => {
+            const isPaid = parcel.status === ParcelStatus.CONFIRMED;
+            const statusText = isPaid ? t('paid') : t('pending');
+
+            return (
+              <li key={parcel.id} className="p-6 flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className={`mr-4 ${isPaid ? 'text-green-500' : 'text-yellow-500'}`}>
+                    {isPaid ? <CheckCircle size={24} /> : <Clock size={24} />}
+                  </div>
+                  <div className="mx-4">
+                    <p className="font-bold text-lg">{parcel.title}</p>
+                    <p className="text-sm text-gray-500">{new Date(parcel.delivery_date).toLocaleDateString()}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-lg">${payment.amount}</p>
-                  <p className="text-sm text-gray-500">{new Date(payment.date).toLocaleDateString()}</p>
+                <div className="flex items-center">
+                  <span className={`text-sm font-bold uppercase ${isPaid ? 'text-green-500' : 'text-yellow-500'}`}>
+                    {statusText}
+                  </span>
                 </div>
-              </div>
-              <div className="flex items-center">
-                <DollarSign className="mr-2" size={20} />
-                <span className={`text-sm font-bold uppercase ${payment.status === 'paid' ? 'text-green-500' : 'text-yellow-500'}`}>
-                  {t(payment.status)}
-                </span>
-              </div>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

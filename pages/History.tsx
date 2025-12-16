@@ -6,13 +6,27 @@ import { BackButton } from '../components/ui/BackButton';
 import { Footer } from '../components/layout/Footer';
 import { useApp } from '../context/AppContext';
 import { ParcelStatus } from '../types';
+import { updateParcelStatus } from '../services/data';
+import { useNotification } from '../context/NotificationContext';
 
 export const History = () => {
   const { t, dir } = useLanguage();
-  const { parcels } = useApp();
+  const { parcels, refreshData, user, role } = useApp();
+  const { addNotification } = useNotification();
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
-  
-  const completedParcels = parcels.filter(p => p.status === ParcelStatus.DELIVERED);
+
+  const completedParcels = parcels.filter(p => p.status === ParcelStatus.DELIVERED || p.status === ParcelStatus.CONFIRMED);
+
+  const handleConfirmDelivery = async (parcelId: string) => {
+    try {
+      await updateParcelStatus(parcelId, ParcelStatus.CONFIRMED);
+      addNotification(t('statusUpdated'), 'success');
+      if(user)
+      refreshData(role, user.id);
+    } catch (error) {
+      addNotification(t('statusUpdateError'), 'error');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 lg:p-8" dir={dir}>
@@ -33,21 +47,25 @@ export const History = () => {
             {completedParcels.map((parcel) => (
               <div key={parcel.id} className="bg-white rounded-2xl shadow-md p-6 flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div className="flex-grow">
-                    <div className="flex items-center gap-4 mb-3">
-                        <div className="flex flex-col items-center">
-                            <span className="font-bold text-lg text-gray-800">{parcel.origin.label}</span>
+                    <div className="flex-col items-center gap-4 mb-3">
+                        <div className="flex flex-col">
+                            <span className="font-bold text-sm text-gray-800">{parcel.origin.label}</span>
                         </div>
-                        <Arrow className="w-5 h-5 text-gray-400 mt-1"/>
-                        <div className="flex flex-col items-center">
-                           <span className="font-bold text-lg text-gray-800">{parcel.destination.label}</span>
+                        <Arrow className="w-5 h-5 mr-4 text-gray-400 my-2"/>
+                        <div className="flex flex-col">
+                           <span className="font-bold text-sm text-gray-800">{parcel.destination.label}</span>
                         </div>
                     </div>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 mt-6">
                         {t('completedOn')} {new Date(parcel.delivery_date).toLocaleDateString()}
                     </p>
                 </div>
                 <div className="flex items-center gap-6 mt-4 sm:mt-0">
+                  {parcel.status === ParcelStatus.DELIVERED ? (
+                    <Button onClick={() => handleConfirmDelivery(parcel.id)}>{t('confirmDelivery')}</Button>
+                  ) : (
                     <Button variant="secondary">{t('viewDetails')}</Button>
+                  )}
                 </div>
               </div>
             ))}

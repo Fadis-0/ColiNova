@@ -45,7 +45,9 @@ export const AcceptedParcels = () => {
 
   useEffect(() => {
     if (user) {
-      const filteredParcels = parcels.filter(p => p.status !== ParcelStatus.PENDING && p.transporter_id === user.id);
+      const filteredParcels = parcels.filter(
+        p => p.status !== ParcelStatus.PENDING && p.status !== ParcelStatus.CONFIRMED && p.transporter_id === user.id
+      );
       setAcceptedParcels(filteredParcels);
     }
   }, [parcels, user]);

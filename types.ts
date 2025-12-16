@@ -11,6 +11,7 @@ export enum ParcelStatus {
   PICKED_UP = 'PICKED_UP',
   IN_TRANSIT = 'IN_TRANSIT',
   DELIVERED = 'DELIVERED',
+  CONFIRMED = 'CONFIRMED',
 }
 
 export interface User {
