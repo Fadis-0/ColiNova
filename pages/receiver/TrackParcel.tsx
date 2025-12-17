@@ -3,18 +3,23 @@ import { Button } from '../../components/ui/Button';
 import { Search, Package, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import RealMap from '../../components/ui/RealMap';
 import { useLanguage } from '../../context/LanguageContext';
-import { fetchParcelByTrackingCode, updateParcelStatus } from '../../services/data';
+import { fetchParcelByTrackingCode, updateParcelStatus, saveReview } from '../../services/data';
 import { Parcel, ParcelStatus } from '../../types';
 import { BackButton } from '../../components/ui/BackButton';
 import { useNotification } from '../../context/NotificationContext';
+import { ReviewModal } from '../../components/ui/ReviewModal';
+import { useApp } from '../../context/AppContext';
 
 export const TrackParcel = () => {
   const { t, dir } = useLanguage();
+  const { user } = useApp();
   const [trackCode, setTrackCode] = useState('');
   const [parcel, setParcel] = useState<Parcel | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [route, setRoute] = useState(null);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState('personal');
   const { addNotification } = useNotification();
 
   useEffect(() => {
@@ -72,8 +77,25 @@ export const TrackParcel = () => {
       addNotification(t('statusUpdated'), 'success');
       const updatedParcel = await fetchParcelByTrackingCode(trackCode);
       setParcel(updatedParcel);
+      setIsReviewModalOpen(true);
     } catch (error) {
       addNotification(t('statusUpdateError'), 'error');
+    }
+  };
+
+  const handleSubmitReview = async (rating: number, comment: string) => {
+    if (!parcel || !user) return;
+    try {
+      await saveReview({
+        parcel_id: parcel.id,
+        reviewer_id: user.id,
+        reviewee_id: parcel.transporter_id,
+        rating,
+        comment,
+      });
+      addNotification(t('reviewSubmitted'), 'success');
+    } catch (error) {
+      addNotification(t('reviewSubmitError'), 'error');
     }
   };
   
@@ -184,6 +206,38 @@ export const TrackParcel = () => {
              </div>
              {parcel.status === ParcelStatus.DELIVERED && (
               <div className="mt-8">
+                <div className="space-y-4 mb-4">
+                  <h3 className="text-lg font-bold">{t('deliveryOptions')}</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button
+                      variant={deliveryOption === 'personal' ? 'primary' : 'outline'}
+                      onClick={() => setDeliveryOption('personal')}
+                    >
+                      {t('personalReception')}
+                    </Button>
+                    <Button
+                      variant={deliveryOption === 'warehouse' ? 'primary' : 'outline'}
+                      onClick={() => setDeliveryOption('warehouse')}
+                    >
+                      {t('depositWarehouse')}
+                    </Button>
+                  </div>
+                  {deliveryOption === 'warehouse' && (
+                    <div className="mt-4">
+                      <label htmlFor="deposit-location" className="block text-sm font-medium text-gray-700">
+                        {t('selectDepositLocation')}
+                      </label>
+                      <select
+                        id="deposit-location"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      >
+                        <option>{t('depositLocation1')}</option>
+                        <option>{t('depositLocation2')}</option>
+                        <option>{t('depositLocation3')}</option>
+                      </select>
+                    </div>
+                  )}
+                </div>
                 <Button onClick={handleConfirmDelivery} className="w-full">
                   {t('confirmDelivery')}
                 </Button>
@@ -222,6 +276,11 @@ export const TrackParcel = () => {
           </div>
         </div>
       )}
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        onSubmit={handleSubmitReview}
+      />
     </div>
   );
 };

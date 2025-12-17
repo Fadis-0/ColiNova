@@ -144,5 +144,26 @@ export const fetchParcelByTrackingCode = async (trackingCode: string): Promise<P
     throw error;
   }
 
-  return data as Parcel | null;
-};
+    return data as Parcel | null;
+
+  };
+
+  
+
+  export const saveReview = async (review: { parcel_id: string; reviewer_id: string; reviewee_id: string | undefined; rating: number; comment: string; }) => {
+
+      const { data, error } = await supabase.from('reviews').insert([review]);
+
+      if (error) {
+
+          console.error('Error saving review:', error);
+
+          throw error;
+
+      }
+
+      return data;
+
+  };
+
+  
