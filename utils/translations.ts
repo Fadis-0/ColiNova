@@ -296,11 +296,11 @@ export const translations = {
         reviewSubmitError: 'خطأ في إرسال التقييم.',
         deliveryOptions: 'خيارات التوصيل',
         personalReception: 'استلام شخصي',
-        depositWarehouse: 'مستودع الإيداع',
-        selectDepositLocation: 'اختر موقع الإيداع',
-        depositLocation1: 'موقع الإيداع 1',
-        depositLocation2: 'موقع الإيداع 2',
-        depositLocation3: 'موقع الإيداع 3',
+        depositWarehouse: 'نقطة الإيداع',
+        selectDepositLocation: 'اختيار نقطة إيداع (تخزين مؤقت)',
+        depositLocation1: 'نقطة الإيداع 1',
+        depositLocation2: 'نقطة الإيداع 2',
+        depositLocation3: 'نقطة الإيداع 3',
         
         // Profile
         verifications: 'التحققات',
